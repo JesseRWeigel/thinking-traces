@@ -173,8 +173,15 @@ def analyze() -> dict:
                 "gen": gen,
                 "gen_s_ratio": gen["ratio"],
                 "extra_s_per_item": extra_s,
+                "extra_tokens_per_item": tokens["a_mean"] - tokens["b_mean"],
                 "acc_points_per_extra_second": (
                     (pd["mean"] * 100.0 / extra_s) if extra_s > 1e-9 else None
+                ),
+                # The per-token version is the one to trust on a shared card.
+                # Seconds move with whatever else is running; tokens do not.
+                "acc_points_per_1k_extra_tokens": (
+                    (pd["mean"] * 100.0 * 1000.0 / (tokens["a_mean"] - tokens["b_mean"]))
+                    if (tokens["a_mean"] - tokens["b_mean"]) > 1e-9 else None
                 ),
             })
 

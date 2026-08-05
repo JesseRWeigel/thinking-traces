@@ -363,9 +363,16 @@ function main() {
     closeRel(`${tag} token_ratio`, onTok / offTok, cell.token_ratio, Math.abs(cell.token_ratio));
     const extraS = meanOf(byCond.on.map((g) => g.genS)) - meanOf(byCond.off.map((g) => g.genS));
     closeRel(`${tag} extra_s_per_item`, extraS, cell.extra_s_per_item, Math.abs(cell.extra_s_per_item));
+    const extraTok = onTok - offTok;
+    closeRel(`${tag} extra_tokens_per_item`, extraTok, cell.extra_tokens_per_item,
+      Math.abs(cell.extra_tokens_per_item));
     if (cell.acc_points_per_extra_second !== null) {
       closeRel(`${tag} acc_points_per_extra_second`, (pd.mean * 100) / extraS,
         cell.acc_points_per_extra_second, Math.abs(cell.acc_points_per_extra_second));
+    }
+    if (cell.acc_points_per_1k_extra_tokens !== null) {
+      closeRel(`${tag} acc_points_per_1k_extra_tokens`, (pd.mean * 100 * 1000) / extraTok,
+        cell.acc_points_per_1k_extra_tokens, Math.abs(cell.acc_points_per_1k_extra_tokens));
     }
 
     // Sanity facts that hold regardless of the aggregator: the flip counts must

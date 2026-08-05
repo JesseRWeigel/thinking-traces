@@ -105,6 +105,8 @@ def build(summary: dict) -> str:
             extra = c["extra_s_per_item"]
             per_s = c["acc_points_per_extra_second"]
             per_s_txt = "n/a" if per_s is None else f"{per_s:+.2f}"
+            per_k = c["acc_points_per_1k_extra_tokens"]
+            per_k_txt = "n/a" if per_k is None else f"{per_k:+.2f}"
             body.append(
                 "<tr>"
                 f"<td>{html.escape(TYPE_LABEL[c['type']])}</td>"
@@ -118,6 +120,7 @@ def build(summary: dict) -> str:
                 f"<td>{c['off']['gen_tokens_mean']:.0f}</td>"
                 f"<td>{c['on']['gen_tokens_mean']:.0f}</td>"
                 f"<td>{c['token_ratio']:.1f}x</td>"
+                f"<td>{per_k_txt}</td>"
                 f"<td>{extra:+.1f}s</td>"
                 f"<td>{per_s_txt}</td>"
                 "</tr>"
@@ -142,7 +145,8 @@ def build(summary: dict) -> str:
 <div class="scroll"><table>
 <thead><tr>
   <th>Task type</th><th>Acc, off</th><th>Acc, on</th><th>Paired diff (pts)</th><th>Verdict</th>
-  <th>Tok off</th><th>Tok on</th><th>Token cost</th><th>Extra decode</th><th>Pts / extra s</th>
+  <th>Tok off</th><th>Tok on</th><th>Token cost</th><th>Pts / 1k extra tok</th>
+  <th>Extra decode</th><th>Pts / extra s</th>
 </tr></thead>
 <tbody>{''.join(body)}</tbody>
 </table></div>
@@ -220,6 +224,10 @@ accuracy column can never be an empty output in disguise.</li>
 <li>Cost is reported two ways. Generated tokens are contention free. Decode seconds come from the
 server's own <code>eval_duration</code>, which excludes model load, because the card is shared with
 other work and raw wall clock on a shared card measures the neighbours.</li>
+<li>Two exchange rates follow from that. Points per thousand extra tokens is the one to trust,
+since tokens do not move when a neighbour starts a job. Points per extra second is the number the
+task asked for, and it is reported next to it with the caveat that the seconds were measured on a
+contended card.</li>
 </ul>
 
 <footer>
