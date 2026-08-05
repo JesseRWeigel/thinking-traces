@@ -78,10 +78,16 @@ therefore cannot be an empty output in disguise, and the usable count sits next 
 ### Shared GPU
 
 One card, several agents. While this ran, `gpt-oss:20b` sat resident at 14.9 GB serving a Minecraft
-bot swarm that is not mine to stop, another builder's `qwen2.5-coder:7b` came and went, and GPU
-utilisation from that other work sat between 55 and 80 percent. That contention inflates wall clock
-and leaves generated tokens untouched, which is why tokens are the headline cost column and wall
-clock carries a caveat.
+bot swarm that is not mine to stop. Two other builders' models came and went alongside it,
+`qwen2.5-coder:7b` and `mistral:7b`, and GPU utilisation from that other work sat between 55 and 95
+percent. My model was evicted and reloaded several times mid run, which is visible in the recorded
+`load_duration_ns` per response.
+
+That contention inflates wall clock and leaves generated tokens untouched, which is why tokens are
+the headline cost column. Decode seconds come from the server's own `eval_duration` and exclude
+model load, so they survive eviction but not compute contention. The measured throughput ranged
+from 25 to 220 tokens per second on the same model depending on what else was running, so the
+absolute seconds in the tables are specific to a busy card. The token counts are not.
 
 ## Running it
 
@@ -216,4 +222,52 @@ TODO: pasted verify output goes here once the measurement run completes.
 
 ## Unfinished
 
-TODO
+**The self-disagreement floor is not yet measured, and `verify.sh` fails because of it.** Temperature
+0 is not determinism on this backend: another builder on this workstation demonstrated one unchanged
+route returning two different answers over eight repeats of the same prompt. Without a replicate run
+there is no floor to compare an effect against, so `analyze` records
+`noise_floor: {"measured": false}`, every cell carries `clears_noise_floor: null`, and the verify
+step for it exits nonzero rather than reporting a skip as a pass. The machinery is built and the run
+is two commands:
+
+```bash
+PYTHONPATH=src python3 -m thinktrace.runner --model qwen3:8b   --think both --tag rep2 --per-type 8
+PYTHONPATH=src python3 -m thinktrace.runner --model qwen3.5:9b --think both --tag rep2 --per-type 8
+```
+
+It is waiting on exclusive GPU time behind another measurement task that contention makes wrong
+rather than merely slow.
+
+**The baseline is high, which caps what any intervention could win.** Thinking off scores between 75
+and 100 percent on every task type. A cell already at 97.5 percent cannot show a large gain, so
+"thinking did not help here" is partly a statement about these items being too easy for these
+models. Harder items in each category would be a better test of the same question, and the honest
+reading of this result is narrower than "thinking traces do not help": it is that on tasks these
+models already handle, the traces are pure cost.
+
+**Only two models, both small and from the same family.** `qwen3:8b` and `qwen3.5:9b`. The catalog
+task also named `qwen3.5:27b` and `qwen3.6:27b`, which are 17 GB each and did not fit in the
+available headroom alongside the swarm's 14.9 GB. Nothing here should be read as applying to larger
+models or to other families.
+
+**`num_ctx` was left at the server default.** The model loaded at a 32768 context for prompts under
+200 tokens, which cost roughly 10 GB of VRAM where about 6 GB would have done. Sizing it from the
+longest prompt would make this cheaper to reproduce. It was deliberately not changed after the main
+run began, because the replicate measurement has to use byte identical settings or it measures the
+config change rather than backend nondeterminism.
+
+**Two graded items are judgment calls rather than facts.** `recall-25` asks which planet has the most
+moons, where the answer changed with observations in 2023 and a model trained earlier answers
+Jupiter. That is a legitimate recall failure but it dates the item. `overthink-30` expects "meat" for
+what a butcher weighs, and a model answering "cannot be determined" is arguably reading the question
+more carefully than the puzzle intends. Both are graded identically in both conditions, so neither
+affects the paired comparison, and both are named here rather than quietly left in.
+
+**Grading rewards the requested answer format.** Every prompt asks for a final `Answer:` line, and
+the extractor falls back to the last non-empty line when a model ignores that. A model that buries a
+correct answer mid-paragraph can still be marked wrong. This is applied identically to both
+conditions.
+
+**The link check is not part of `verify.sh`.** `scripts/check_links.sh` fetches the deployed page and
+resolves every outbound link, and it needs the network, which would make verify nondeterministic. It
+is run separately and its output is pasted below.
