@@ -152,6 +152,36 @@ def build(summary: dict) -> str:
 </table></div>
 """)
 
+    # The headline is derived from the data rather than written by hand, so it
+    # cannot drift away from the table underneath it.
+    overhead = [c for c in summary["cells"]
+                if c["verdict"] == "indistinguishable" and (c["token_ratio"] or 0) >= 2.0]
+    helps = [c for c in summary["cells"] if c["verdict"] == "helps"]
+    hurts = [c for c in summary["cells"] if c["verdict"] == "hurts"]
+
+    def name_list(cells: list[dict]) -> str:
+        if not cells:
+            return "none"
+        return ", ".join(
+            f"{html.escape(c['model'])} {html.escape(TYPE_LABEL[c['type']].lower())}"
+            for c in cells
+        )
+
+    wasted = sum(c["on"]["gen_tokens_total"] - c["off"]["gen_tokens_total"] for c in overhead)
+    waste_line = (
+        f" Across those cells the traces burned {wasted:,} extra generated tokens for a"
+        " difference this sample size cannot distinguish from zero."
+        if overhead else ""
+    )
+    headline = f"""
+<div class="card">
+<p><strong>Where the traces paid for themselves:</strong> {name_list(helps)}.</p>
+<p><strong>Where they cost at least twice the tokens and returned nothing measurable:</strong>
+{name_list(overhead)}.{waste_line}</p>
+<p><strong>Where they measurably hurt:</strong> {name_list(hurts)}.</p>
+</div>
+"""
+
     flag_rows = []
     for model, ev in summary["flag_check"].items():
         flag_rows.append(
@@ -194,7 +224,7 @@ statement about this sample size and not a claim that the effect is exactly zero
 reads indistinguishable while the token cost column reads several times over is the finding
 that matters: the traces were paid for and returned nothing measurable.</p>
 </div>
-
+{headline}
 {''.join(rows)}
 
 <h2>Did the flag actually take effect</h2>
