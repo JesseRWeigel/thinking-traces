@@ -1,0 +1,2149 @@
+[
+  {
+    "id": "arith-00-0",
+    "type": "arith",
+    "prompt": "A warehouse holds 43 crates. Each crate contains 11 boxes. 34 boxes are removed for inspection, then 21 more full crates arrive. How many boxes are in the warehouse now? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "670",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-00-1",
+    "type": "arith",
+    "prompt": "A warehouse holds 39 crates. Each crate contains 16 boxes. 35 boxes are removed for inspection, then 6 more full crates arrive. How many boxes are in the warehouse now? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "685",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-00-2",
+    "type": "arith",
+    "prompt": "A warehouse holds 47 crates. Each crate contains 21 boxes. 60 boxes are removed for inspection, then 23 more full crates arrive. How many boxes are in the warehouse now? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "1410",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-00-3",
+    "type": "arith",
+    "prompt": "A warehouse holds 36 crates. Each crate contains 8 boxes. 16 boxes are removed for inspection, then 22 more full crates arrive. How many boxes are in the warehouse now? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "448",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-00-4",
+    "type": "arith",
+    "prompt": "A warehouse holds 32 crates. Each crate contains 28 boxes. 53 boxes are removed for inspection, then 8 more full crates arrive. How many boxes are in the warehouse now? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "1067",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-01-0",
+    "type": "arith",
+    "prompt": "A printer produces 42 pages per minute for 7 minutes, then jams and wastes 24 pages, then produces 12 more pages. How many good pages were produced? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "282",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-01-1",
+    "type": "arith",
+    "prompt": "A printer produces 47 pages per minute for 24 minutes, then jams and wastes 71 pages, then produces 22 more pages. How many good pages were produced? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "1079",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-01-2",
+    "type": "arith",
+    "prompt": "A printer produces 13 pages per minute for 19 minutes, then jams and wastes 14 pages, then produces 20 more pages. How many good pages were produced? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "253",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-01-3",
+    "type": "arith",
+    "prompt": "A printer produces 39 pages per minute for 26 minutes, then jams and wastes 86 pages, then produces 23 more pages. How many good pages were produced? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "951",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-01-4",
+    "type": "arith",
+    "prompt": "A printer produces 40 pages per minute for 7 minutes, then jams and wastes 85 pages, then produces 9 more pages. How many good pages were produced? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "204",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-02-0",
+    "type": "arith",
+    "prompt": "A shop sells 24 shirts at 10 dollars each and 13 hats at 17 dollars each. How much money does the shop take in? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "461",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-02-1",
+    "type": "arith",
+    "prompt": "A shop sells 26 shirts at 13 dollars each and 78 hats at 23 dollars each. How much money does the shop take in? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "2132",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-02-2",
+    "type": "arith",
+    "prompt": "A shop sells 13 shirts at 12 dollars each and 41 hats at 22 dollars each. How much money does the shop take in? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "1058",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-02-3",
+    "type": "arith",
+    "prompt": "A shop sells 41 shirts at 15 dollars each and 68 hats at 4 dollars each. How much money does the shop take in? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "887",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-02-4",
+    "type": "arith",
+    "prompt": "A shop sells 47 shirts at 8 dollars each and 47 hats at 4 dollars each. How much money does the shop take in? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "564",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-03-0",
+    "type": "arith",
+    "prompt": "A tank holds 408 litres. 10 litres are drained each hour for 7 hours, then 31 litres are added. How many litres are in the tank? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "369",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-03-1",
+    "type": "arith",
+    "prompt": "A tank holds 653 litres. 13 litres are drained each hour for 3 hours, then 40 litres are added. How many litres are in the tank? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "654",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-03-2",
+    "type": "arith",
+    "prompt": "A tank holds 768 litres. 18 litres are drained each hour for 3 hours, then 82 litres are added. How many litres are in the tank? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "796",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-03-3",
+    "type": "arith",
+    "prompt": "A tank holds 883 litres. 19 litres are drained each hour for 6 hours, then 57 litres are added. How many litres are in the tank? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "826",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-03-4",
+    "type": "arith",
+    "prompt": "A tank holds 463 litres. 5 litres are drained each hour for 6 hours, then 94 litres are added. How many litres are in the tank? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "527",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-04-0",
+    "type": "arith",
+    "prompt": "A team of 42 people each collect 26 samples. 3 people then each lose 3 samples. How many samples does the team still have? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "1083",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-04-1",
+    "type": "arith",
+    "prompt": "A team of 26 people each collect 25 samples. 5 people then each lose 7 samples. How many samples does the team still have? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "615",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-04-2",
+    "type": "arith",
+    "prompt": "A team of 20 people each collect 24 samples. 4 people then each lose 6 samples. How many samples does the team still have? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "456",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-04-3",
+    "type": "arith",
+    "prompt": "A team of 40 people each collect 32 samples. 7 people then each lose 2 samples. How many samples does the team still have? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "1266",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-04-4",
+    "type": "arith",
+    "prompt": "A team of 40 people each collect 35 samples. 2 people then each lose 9 samples. How many samples does the team still have? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "1382",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-05-0",
+    "type": "arith",
+    "prompt": "A bus starts with 69 passengers. At the first stop 8 get off and 37 get on. At the second stop half of the passengers get off, then 18 get on. How many passengers are on the bus? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "67",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-05-1",
+    "type": "arith",
+    "prompt": "A bus starts with 63 passengers. At the first stop 17 get off and 40 get on. At the second stop half of the passengers get off, then 9 get on. How many passengers are on the bus? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "52",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-05-2",
+    "type": "arith",
+    "prompt": "A bus starts with 90 passengers. At the first stop 26 get off and 32 get on. At the second stop half of the passengers get off, then 5 get on. How many passengers are on the bus? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "53",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-05-3",
+    "type": "arith",
+    "prompt": "A bus starts with 96 passengers. At the first stop 27 get off and 31 get on. At the second stop half of the passengers get off, then 11 get on. How many passengers are on the bus? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "61",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-05-4",
+    "type": "arith",
+    "prompt": "A bus starts with 81 passengers. At the first stop 20 get off and 31 get on. At the second stop half of the passengers get off, then 23 get on. How many passengers are on the bus? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "69",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-06-0",
+    "type": "arith",
+    "prompt": "A library buys 34 books per month for 17 months, donates 63 books, and then buys 17 more. How many books did it add in total? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "532",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-06-1",
+    "type": "arith",
+    "prompt": "A library buys 19 books per month for 25 months, donates 95 books, and then buys 13 more. How many books did it add in total? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "393",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-06-2",
+    "type": "arith",
+    "prompt": "A library buys 11 books per month for 24 months, donates 94 books, and then buys 13 more. How many books did it add in total? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "183",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-06-3",
+    "type": "arith",
+    "prompt": "A library buys 21 books per month for 27 months, donates 88 books, and then buys 19 more. How many books did it add in total? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "498",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-06-4",
+    "type": "arith",
+    "prompt": "A library buys 25 books per month for 20 months, donates 48 books, and then buys 12 more. How many books did it add in total? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "464",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-07-0",
+    "type": "arith",
+    "prompt": "A factory runs 7 machines. Each machine makes 31 parts per shift. There are 2 shifts, and 55 parts fail quality control. How many parts pass quality control? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "379",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-07-1",
+    "type": "arith",
+    "prompt": "A factory runs 8 machines. Each machine makes 27 parts per shift. There are 2 shifts, and 36 parts fail quality control. How many parts pass quality control? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "396",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-07-2",
+    "type": "arith",
+    "prompt": "A factory runs 9 machines. Each machine makes 28 parts per shift. There are 5 shifts, and 77 parts fail quality control. How many parts pass quality control? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "1183",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-07-3",
+    "type": "arith",
+    "prompt": "A factory runs 8 machines. Each machine makes 43 parts per shift. There are 5 shifts, and 62 parts fail quality control. How many parts pass quality control? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "1658",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "arith-07-4",
+    "type": "arith",
+    "prompt": "A factory runs 4 machines. Each machine makes 38 parts per shift. There are 4 shifts, and 71 parts fail quality control. How many parts pass quality control? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "537",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "deduct-00",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Cara did not finish in position 5. Ben did not finish in position 3. Cara finished before Dan. Ben finished immediately before Ana. Eve finished before Ben. Eve finished immediately before Cara. Who finished in position 4? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ben",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-01",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Dan finished before Ben. Dan finished immediately before Ben. Eve finished immediately before Cara. Cara finished immediately before Ana. Dan finished before Ana. Who finished in position 1? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Dan",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-02",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Dan finished before Cara. Cara finished immediately before Ana. Eve did not finish in position 1. Dan finished immediately before Eve. Dan did not finish in position 2. Eve finished immediately before Cara. Who finished in position 5? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ben",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-03",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ben finished before Cara. Ben finished immediately before Eve. Cara finished before Ana. Dan finished before Ana. Eve did not finish in position 3. Cara did not finish in position 3. Who finished in position 5? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ana",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-04",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ana did not finish in position 1. Ben did not finish in position 1. Dan did not finish in position 5. Ben did not finish in position 2. Ben finished before Dan. Dan finished before Cara. Who finished in position 4? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Dan",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-05",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Cara did not finish in position 5. Ben finished before Dan. Cara finished immediately before Ana. Eve did not finish in position 4. Ana finished immediately before Eve. Ana did not finish in position 2. Who finished in position 2? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Dan",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-06",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ana finished before Dan. Cara finished before Ana. Eve did not finish in position 1. Eve did not finish in position 5. Cara finished immediately before Ben. Eve finished immediately before Dan. Who finished in position 1? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Cara",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-07",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ben did not finish in position 3. Eve finished immediately before Ben. Dan finished immediately before Cara. Ana did not finish in position 5. Ana did not finish in position 1. Ana finished immediately before Eve. Who finished in position 5? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ben",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-08",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ana finished before Dan. Ben did not finish in position 4. Ana did not finish in position 2. Cara did not finish in position 1. Cara finished before Eve. Ana finished immediately before Eve. Who finished in position 4? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Eve",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-09",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Cara did not finish in position 5. Dan finished before Cara. Cara finished immediately before Ben. Dan did not finish in position 2. Eve finished before Cara. Dan finished immediately before Ana. Who finished in position 2? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ana",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-10",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ana finished before Ben. Eve finished immediately before Cara. Eve finished before Ben. Ana did not finish in position 2. Cara finished immediately before Ana. Dan finished immediately before Eve. Who finished in position 5? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ben",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-11",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Eve finished before Dan. Ben did not finish in position 1. Ana finished before Eve. Cara finished immediately before Eve. Eve did not finish in position 3. Who finished in position 5? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Dan",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-12",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Eve finished before Cara. Dan finished before Ben. Eve did not finish in position 3. Ben finished before Cara. Cara finished before Ana. Eve did not finish in position 2. Who finished in position 1? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Eve",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-13",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ben finished immediately before Eve. Dan finished immediately before Cara. Dan did not finish in position 2. Ana finished immediately before Ben. Ana did not finish in position 1. Who finished in position 5? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Eve",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-14",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ana finished immediately before Ben. Dan finished before Cara. Eve finished before Ana. Dan finished before Ana. Dan finished before Eve. Ben finished before Cara. Who finished in position 2? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Eve",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-15",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Eve did not finish in position 3. Dan finished before Cara. Cara did not finish in position 5. Dan finished before Ana. Dan did not finish in position 2. Eve finished immediately before Dan. Who finished in position 4? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Cara",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-16",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Dan finished before Ben. Ana finished before Cara. Cara finished before Ben. Cara finished immediately before Eve. Ana did not finish in position 2. Ana finished immediately before Dan. Who finished in position 3? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Cara",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-17",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Eve finished immediately before Cara. Ben finished before Cara. Dan did not finish in position 4. Eve finished before Ana. Dan finished before Ana. Dan did not finish in position 2. Who finished in position 1? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Dan",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-18",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Eve finished before Ana. Dan did not finish in position 1. Dan finished immediately before Ben. Dan finished before Ana. Eve finished immediately before Dan. Ana finished before Cara. Who finished in position 5? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Cara",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-19",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Cara did not finish in position 3. Cara finished before Ben. Ana finished immediately before Ben. Cara did not finish in position 1. Dan did not finish in position 5. Dan did not finish in position 1. Who finished in position 5? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ben",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-20",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Dan did not finish in position 4. Ana finished immediately before Eve. Eve finished before Ben. Cara finished before Eve. Cara finished before Dan. Ana finished before Dan. Who finished in position 4? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ben",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-21",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Cara finished before Eve. Ana did not finish in position 4. Eve finished immediately before Ana. Eve did not finish in position 4. Dan did not finish in position 5. Who finished in position 2? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Eve",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-22",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ben did not finish in position 5. Eve finished before Ben. Cara finished before Ana. Dan finished immediately before Ben. Eve did not finish in position 2. Cara did not finish in position 2. Who finished in position 1? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Eve",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-23",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ben did not finish in position 3. Cara did not finish in position 1. Eve finished immediately before Ana. Ben finished before Ana. Ana finished before Cara. Ana finished immediately before Dan. Who finished in position 4? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Dan",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-24",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ben finished immediately before Eve. Ana did not finish in position 4. Dan finished immediately before Ben. Dan did not finish in position 2. Eve finished before Cara. Who finished in position 1? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Dan",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-25",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Cara finished before Ben. Ben finished immediately before Dan. Cara did not finish in position 3. Ana finished before Ben. Cara finished immediately before Eve. Cara finished before Ana. Who finished in position 1? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Cara",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-26",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Cara finished before Ben. Ana did not finish in position 3. Dan finished immediately before Ana. Ana finished before Ben. Cara finished before Eve. Cara finished before Dan. Who finished in position 3? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Dan",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-27",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ben finished before Ana. Ben did not finish in position 2. Eve finished immediately before Dan. Eve finished before Ben. Cara did not finish in position 3. Ben finished immediately before Cara. Who finished in position 2? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Dan",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-28",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Eve finished immediately before Cara. Eve did not finish in position 3. Cara finished before Ben. Ana finished before Ben. Ana finished before Cara. Ben did not finish in position 5. Who finished in position 4? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ben",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-29",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Dan finished before Cara. Eve did not finish in position 5. Eve finished before Ana. Cara finished immediately before Ana. Ben did not finish in position 3. Dan finished immediately before Ben. Who finished in position 5? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ana",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-30",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Dan finished immediately before Ana. Dan finished before Ben. Cara finished before Dan. Cara finished before Eve. Eve finished immediately before Dan. Who finished in position 1? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Cara",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-31",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Dan finished before Cara. Ana finished immediately before Cara. Cara finished immediately before Eve. Dan finished before Ben. Ben finished before Cara. Who finished in position 1? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Dan",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-32",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ben did not finish in position 2. Dan finished before Eve. Ben did not finish in position 1. Eve finished immediately before Ben. Cara finished immediately before Dan. Eve did not finish in position 4. Who finished in position 2? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Dan",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-33",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ben did not finish in position 4. Ana did not finish in position 5. Eve finished before Ana. Dan finished immediately before Ana. Ana did not finish in position 4. Who finished in position 5? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ben",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-34",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ben did not finish in position 3. Dan finished before Ana. Dan finished before Eve. Ben finished immediately before Cara. Eve finished before Ben. Eve did not finish in position 3. Who finished in position 5? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Cara",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-35",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ana did not finish in position 3. Dan did not finish in position 2. Ben finished before Ana. Dan did not finish in position 3. Ben finished before Dan. Dan finished before Eve. Who finished in position 3? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Cara",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-36",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ana finished immediately before Dan. Ben did not finish in position 1. Cara did not finish in position 1. Cara finished before Eve. Cara did not finish in position 3. Who finished in position 1? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ana",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-37",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Ana finished before Eve. Cara finished before Dan. Dan finished before Eve. Ana finished immediately before Ben. Cara finished before Ben. Dan finished before Ben. Who finished in position 5? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Eve",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-38",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Dan finished immediately before Ana. Ana finished immediately before Cara. Ana did not finish in position 2. Ben finished before Eve. Eve finished before Cara. Who finished in position 4? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ana",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "deduct-39",
+    "type": "deduct",
+    "prompt": "Five runners finished a race: Ana, Ben, Cara, Dan and Eve. Eve finished immediately before Cara. Ben finished immediately before Eve. Cara did not finish in position 5. Dan finished immediately before Ana. Who finished in position 5? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ana",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-00",
+    "type": "recall",
+    "prompt": "What is the chemical symbol for potassium? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "K",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-01",
+    "type": "recall",
+    "prompt": "What is the chemical symbol for tungsten? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "W",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-02",
+    "type": "recall",
+    "prompt": "What is the chemical symbol for lead? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Pb",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-03",
+    "type": "recall",
+    "prompt": "What is the chemical symbol for tin? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Sn",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-04",
+    "type": "recall",
+    "prompt": "What is the chemical symbol for silver? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ag",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-05",
+    "type": "recall",
+    "prompt": "What is the capital city of Australia? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Canberra",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-06",
+    "type": "recall",
+    "prompt": "What is the capital city of Canada? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ottawa",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-07",
+    "type": "recall",
+    "prompt": "What is the capital city of Brazil? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Brasilia",
+    "accept": [
+      "Brasília"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-08",
+    "type": "recall",
+    "prompt": "What is the capital city of Switzerland? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Bern",
+    "accept": [
+      "Berne"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-09",
+    "type": "recall",
+    "prompt": "What is the capital city of Turkey? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ankara",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-10",
+    "type": "recall",
+    "prompt": "What is the capital city of Vietnam? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Hanoi",
+    "accept": [
+      "Ha Noi"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-11",
+    "type": "recall",
+    "prompt": "What is the capital city of Morocco? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Rabat",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-12",
+    "type": "recall",
+    "prompt": "What is the official currency of Japan? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Yen",
+    "accept": [
+      "Japanese yen"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-13",
+    "type": "recall",
+    "prompt": "What is the official currency of Poland? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Zloty",
+    "accept": [
+      "Polish zloty",
+      "Złoty"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-14",
+    "type": "recall",
+    "prompt": "What is the official currency of South Korea? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Won",
+    "accept": [
+      "South Korean won"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-15",
+    "type": "recall",
+    "prompt": "What is the official currency of India? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Rupee",
+    "accept": [
+      "Indian rupee"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-16",
+    "type": "recall",
+    "prompt": "In which year did the Berlin Wall fall? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "1989",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-17",
+    "type": "recall",
+    "prompt": "In which year did the first human walk on the Moon? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "1969",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-18",
+    "type": "recall",
+    "prompt": "In which year did the Titanic sink? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "1912",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-19",
+    "type": "recall",
+    "prompt": "In which year did the Second World War end? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "1945",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-20",
+    "type": "recall",
+    "prompt": "Who wrote the novel 'Nineteen Eighty-Four'? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "George Orwell",
+    "accept": [
+      "Orwell"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-21",
+    "type": "recall",
+    "prompt": "Who wrote the play 'A Doll's House'? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Henrik Ibsen",
+    "accept": [
+      "Ibsen"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-22",
+    "type": "recall",
+    "prompt": "Who wrote the novel 'Things Fall Apart'? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Chinua Achebe",
+    "accept": [
+      "Achebe"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-23",
+    "type": "recall",
+    "prompt": "Who painted 'The Starry Night'? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Vincent van Gogh",
+    "accept": [
+      "van Gogh",
+      "Van Gogh"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-24",
+    "type": "recall",
+    "prompt": "Which planet is closest to the Sun? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Mercury",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-25",
+    "type": "recall",
+    "prompt": "Which planet has the most moons of any in the Solar System? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Saturn",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-26",
+    "type": "recall",
+    "prompt": "Which is the largest ocean on Earth? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Pacific",
+    "accept": [
+      "Pacific Ocean"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-27",
+    "type": "recall",
+    "prompt": "Which is the longest river in South America? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Amazon",
+    "accept": [
+      "Amazon River"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-28",
+    "type": "recall",
+    "prompt": "What is the largest country in Africa by land area? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Algeria",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-29",
+    "type": "recall",
+    "prompt": "What is the tallest mountain above sea level? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Everest",
+    "accept": [
+      "Mount Everest"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-30",
+    "type": "recall",
+    "prompt": "How many bones are in the adult human body? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "206",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-31",
+    "type": "recall",
+    "prompt": "How many players are on the field per team in a football (soccer) match? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "11",
+    "accept": [
+      "eleven"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-32",
+    "type": "recall",
+    "prompt": "How many strings does a standard violin have? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "4",
+    "accept": [
+      "four"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-33",
+    "type": "recall",
+    "prompt": "How many sides does a dodecagon have? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "12",
+    "accept": [
+      "twelve"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-34",
+    "type": "recall",
+    "prompt": "What is the hardest naturally occurring mineral? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Diamond",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-35",
+    "type": "recall",
+    "prompt": "What gas do plants absorb from the air for photosynthesis? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Carbon dioxide",
+    "accept": [
+      "CO2"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-36",
+    "type": "recall",
+    "prompt": "What is the SI base unit of electric current? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Ampere",
+    "accept": [
+      "Amp",
+      "A"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-37",
+    "type": "recall",
+    "prompt": "What is the boiling point of water at sea level in degrees Celsius? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "100",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "recall-38",
+    "type": "recall",
+    "prompt": "Which language has the most native speakers worldwide? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Mandarin",
+    "accept": [
+      "Mandarin Chinese",
+      "Chinese"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "recall-39",
+    "type": "recall",
+    "prompt": "What is the smallest prime number? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "2",
+    "accept": [
+      "two"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "instruct-00",
+    "type": "instruct",
+    "prompt": "Write a description of rain that is exactly 5 words long. Reply with the description only, no other text.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "word_count",
+    "params": {
+      "n": 5
+    }
+  },
+  {
+    "id": "instruct-01",
+    "type": "instruct",
+    "prompt": "Write a description of a bicycle that is exactly 7 words long. Reply with the description only, no other text.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "word_count",
+    "params": {
+      "n": 7
+    }
+  },
+  {
+    "id": "instruct-02",
+    "type": "instruct",
+    "prompt": "Write a description of the ocean that is exactly 9 words long. Reply with the description only, no other text.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "word_count",
+    "params": {
+      "n": 9
+    }
+  },
+  {
+    "id": "instruct-03",
+    "type": "instruct",
+    "prompt": "Write a description of a library that is exactly 11 words long. Reply with the description only, no other text.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "word_count",
+    "params": {
+      "n": 11
+    }
+  },
+  {
+    "id": "instruct-04",
+    "type": "instruct",
+    "prompt": "Write a description of winter that is exactly 13 words long. Reply with the description only, no other text.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "word_count",
+    "params": {
+      "n": 13
+    }
+  },
+  {
+    "id": "instruct-05",
+    "type": "instruct",
+    "prompt": "Reply with the word 'ripple' repeated exactly 3 times, separated by single spaces, and nothing else.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "repeat_word",
+    "params": {
+      "word": "ripple",
+      "n": 3
+    }
+  },
+  {
+    "id": "instruct-06",
+    "type": "instruct",
+    "prompt": "Reply with the word 'anchor' repeated exactly 4 times, separated by single spaces, and nothing else.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "repeat_word",
+    "params": {
+      "word": "anchor",
+      "n": 4
+    }
+  },
+  {
+    "id": "instruct-07",
+    "type": "instruct",
+    "prompt": "Reply with the word 'lantern' repeated exactly 5 times, separated by single spaces, and nothing else.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "repeat_word",
+    "params": {
+      "word": "lantern",
+      "n": 5
+    }
+  },
+  {
+    "id": "instruct-08",
+    "type": "instruct",
+    "prompt": "Reply with the word 'meadow' repeated exactly 6 times, separated by single spaces, and nothing else.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "repeat_word",
+    "params": {
+      "word": "meadow",
+      "n": 6
+    }
+  },
+  {
+    "id": "instruct-09",
+    "type": "instruct",
+    "prompt": "Reply with the word 'signal' repeated exactly 8 times, separated by single spaces, and nothing else.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "repeat_word",
+    "params": {
+      "word": "signal",
+      "n": 8
+    }
+  },
+  {
+    "id": "instruct-10",
+    "type": "instruct",
+    "prompt": "Name 3 colours in capital letters, separated by commas, and nothing else. Do not add a full stop.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "upper_csv",
+    "params": {
+      "n": 3
+    }
+  },
+  {
+    "id": "instruct-11",
+    "type": "instruct",
+    "prompt": "Name 4 colours in capital letters, separated by commas, and nothing else. Do not add a full stop.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "upper_csv",
+    "params": {
+      "n": 4
+    }
+  },
+  {
+    "id": "instruct-12",
+    "type": "instruct",
+    "prompt": "Name 5 colours in capital letters, separated by commas, and nothing else. Do not add a full stop.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "upper_csv",
+    "params": {
+      "n": 5
+    }
+  },
+  {
+    "id": "instruct-13",
+    "type": "instruct",
+    "prompt": "Name 6 colours in capital letters, separated by commas, and nothing else. Do not add a full stop.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "upper_csv",
+    "params": {
+      "n": 6
+    }
+  },
+  {
+    "id": "instruct-14",
+    "type": "instruct",
+    "prompt": "Name 7 colours in capital letters, separated by commas, and nothing else. Do not add a full stop.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "upper_csv",
+    "params": {
+      "n": 7
+    }
+  },
+  {
+    "id": "instruct-15",
+    "type": "instruct",
+    "prompt": "Reply with a single JSON object and nothing else. It must have exactly the keys \"a\", \"b\" in that order, and every value must be the integer 1.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "json_keys",
+    "params": {
+      "keys": [
+        "a",
+        "b"
+      ]
+    }
+  },
+  {
+    "id": "instruct-16",
+    "type": "instruct",
+    "prompt": "Reply with a single JSON object and nothing else. It must have exactly the keys \"x\", \"y\", \"z\" in that order, and every value must be the integer 1.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "json_keys",
+    "params": {
+      "keys": [
+        "x",
+        "y",
+        "z"
+      ]
+    }
+  },
+  {
+    "id": "instruct-17",
+    "type": "instruct",
+    "prompt": "Reply with a single JSON object and nothing else. It must have exactly the keys \"one\", \"two\" in that order, and every value must be the integer 1.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "json_keys",
+    "params": {
+      "keys": [
+        "one",
+        "two"
+      ]
+    }
+  },
+  {
+    "id": "instruct-18",
+    "type": "instruct",
+    "prompt": "Reply with a single JSON object and nothing else. It must have exactly the keys \"p\", \"q\", \"r\" in that order, and every value must be the integer 1.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "json_keys",
+    "params": {
+      "keys": [
+        "p",
+        "q",
+        "r"
+      ]
+    }
+  },
+  {
+    "id": "instruct-19",
+    "type": "instruct",
+    "prompt": "Reply with a single JSON object and nothing else. It must have exactly the keys \"k\", \"v\" in that order, and every value must be the integer 1.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "json_keys",
+    "params": {
+      "keys": [
+        "k",
+        "v"
+      ]
+    }
+  },
+  {
+    "id": "instruct-20",
+    "type": "instruct",
+    "prompt": "Reply with exactly 4 asterisk characters on one line and nothing else.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "exact_chars",
+    "params": {
+      "char": "*",
+      "n": 4
+    }
+  },
+  {
+    "id": "instruct-21",
+    "type": "instruct",
+    "prompt": "Reply with exactly 6 asterisk characters on one line and nothing else.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "exact_chars",
+    "params": {
+      "char": "*",
+      "n": 6
+    }
+  },
+  {
+    "id": "instruct-22",
+    "type": "instruct",
+    "prompt": "Reply with exactly 8 asterisk characters on one line and nothing else.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "exact_chars",
+    "params": {
+      "char": "*",
+      "n": 8
+    }
+  },
+  {
+    "id": "instruct-23",
+    "type": "instruct",
+    "prompt": "Reply with exactly 10 asterisk characters on one line and nothing else.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "exact_chars",
+    "params": {
+      "char": "*",
+      "n": 10
+    }
+  },
+  {
+    "id": "instruct-24",
+    "type": "instruct",
+    "prompt": "Reply with exactly 12 asterisk characters on one line and nothing else.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "exact_chars",
+    "params": {
+      "char": "*",
+      "n": 12
+    }
+  },
+  {
+    "id": "instruct-25",
+    "type": "instruct",
+    "prompt": "Reply with the whole numbers from 9 down to 3 in descending order, separated by commas with no spaces, and nothing else.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "desc_range",
+    "params": {
+      "lo": 3,
+      "hi": 9
+    }
+  },
+  {
+    "id": "instruct-26",
+    "type": "instruct",
+    "prompt": "Reply with the whole numbers from 12 down to 5 in descending order, separated by commas with no spaces, and nothing else.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "desc_range",
+    "params": {
+      "lo": 5,
+      "hi": 12
+    }
+  },
+  {
+    "id": "instruct-27",
+    "type": "instruct",
+    "prompt": "Reply with the whole numbers from 8 down to 2 in descending order, separated by commas with no spaces, and nothing else.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "desc_range",
+    "params": {
+      "lo": 2,
+      "hi": 8
+    }
+  },
+  {
+    "id": "instruct-28",
+    "type": "instruct",
+    "prompt": "Reply with the whole numbers from 15 down to 7 in descending order, separated by commas with no spaces, and nothing else.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "desc_range",
+    "params": {
+      "lo": 7,
+      "hi": 15
+    }
+  },
+  {
+    "id": "instruct-29",
+    "type": "instruct",
+    "prompt": "Reply with the whole numbers from 11 down to 4 in descending order, separated by commas with no spaces, and nothing else.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "desc_range",
+    "params": {
+      "lo": 4,
+      "hi": 11
+    }
+  },
+  {
+    "id": "instruct-30",
+    "type": "instruct",
+    "prompt": "Reply with a single sentence that starts with the word 'Blue' and ends with the word 'today'. Reply with the sentence only.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "start_end",
+    "params": {
+      "start": "Blue",
+      "end": "today"
+    }
+  },
+  {
+    "id": "instruct-31",
+    "type": "instruct",
+    "prompt": "Reply with a single sentence that starts with the word 'Quiet' and ends with the word 'again'. Reply with the sentence only.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "start_end",
+    "params": {
+      "start": "Quiet",
+      "end": "again"
+    }
+  },
+  {
+    "id": "instruct-32",
+    "type": "instruct",
+    "prompt": "Reply with a single sentence that starts with the word 'Seven' and ends with the word 'slowly'. Reply with the sentence only.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "start_end",
+    "params": {
+      "start": "Seven",
+      "end": "slowly"
+    }
+  },
+  {
+    "id": "instruct-33",
+    "type": "instruct",
+    "prompt": "Reply with a single sentence that starts with the word 'Morning' and ends with the word 'north'. Reply with the sentence only.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "start_end",
+    "params": {
+      "start": "Morning",
+      "end": "north"
+    }
+  },
+  {
+    "id": "instruct-34",
+    "type": "instruct",
+    "prompt": "Reply with a single sentence that starts with the word 'Copper' and ends with the word 'twice'. Reply with the sentence only.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "start_end",
+    "params": {
+      "start": "Copper",
+      "end": "twice"
+    }
+  },
+  {
+    "id": "instruct-35",
+    "type": "instruct",
+    "prompt": "Write one sentence of at least five words about a storm that does not contain the letter 'e' anywhere. Reply with the sentence only.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "forbidden_letter",
+    "params": {
+      "letter": "e",
+      "min_words": 5
+    }
+  },
+  {
+    "id": "instruct-36",
+    "type": "instruct",
+    "prompt": "Write one sentence of at least five words about the moon that does not contain the letter 'a' anywhere. Reply with the sentence only.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "forbidden_letter",
+    "params": {
+      "letter": "a",
+      "min_words": 5
+    }
+  },
+  {
+    "id": "instruct-37",
+    "type": "instruct",
+    "prompt": "Write one sentence of at least five words about a river that does not contain the letter 'o' anywhere. Reply with the sentence only.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "forbidden_letter",
+    "params": {
+      "letter": "o",
+      "min_words": 5
+    }
+  },
+  {
+    "id": "instruct-38",
+    "type": "instruct",
+    "prompt": "Write one sentence of at least five words about a garden that does not contain the letter 'i' anywhere. Reply with the sentence only.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "forbidden_letter",
+    "params": {
+      "letter": "i",
+      "min_words": 5
+    }
+  },
+  {
+    "id": "instruct-39",
+    "type": "instruct",
+    "prompt": "Write one sentence of at least five words about the desert that does not contain the letter 's' anywhere. Reply with the sentence only.",
+    "answer": "",
+    "accept": [],
+    "grader": "constraint",
+    "check": "forbidden_letter",
+    "params": {
+      "letter": "s",
+      "min_words": 5
+    }
+  },
+  {
+    "id": "overthink-00",
+    "type": "overthink",
+    "prompt": "A farmer has 17 sheep. All but 9 run away. How many sheep does the farmer have left? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "9",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-01",
+    "type": "overthink",
+    "prompt": "A farmer has 23 sheep. All but 6 run away. How many sheep does the farmer have left? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "6",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-02",
+    "type": "overthink",
+    "prompt": "A farmer has 31 sheep. All but 12 run away. How many sheep does the farmer have left? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "12",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-03",
+    "type": "overthink",
+    "prompt": "A farmer has 14 sheep. All but 5 run away. How many sheep does the farmer have left? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "5",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-04",
+    "type": "overthink",
+    "prompt": "A farmer has 28 sheep. All but 7 run away. How many sheep does the farmer have left? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "7",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-05",
+    "type": "overthink",
+    "prompt": "A farmer has 19 sheep. All but 11 run away. How many sheep does the farmer have left? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "11",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-06",
+    "type": "overthink",
+    "prompt": "A farmer has 36 sheep. All but 4 run away. How many sheep does the farmer have left? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "4",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-07",
+    "type": "overthink",
+    "prompt": "A farmer has 25 sheep. All but 8 run away. How many sheep does the farmer have left? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "8",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-08",
+    "type": "overthink",
+    "prompt": "Which weighs more, 3 kilograms of feathers or 1 kilograms of lead? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "feathers",
+    "accept": [],
+    "grader": "choice",
+    "options": {
+      "feathers": [
+        "feathers",
+        "feather"
+      ],
+      "lead": [
+        "lead"
+      ],
+      "same": [
+        "same",
+        "equal",
+        "equally",
+        "neither",
+        "identical",
+        "tie"
+      ]
+    }
+  },
+  {
+    "id": "overthink-09",
+    "type": "overthink",
+    "prompt": "Which weighs more, 5 kilograms of feathers or 2 kilograms of lead? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "feathers",
+    "accept": [],
+    "grader": "choice",
+    "options": {
+      "feathers": [
+        "feathers",
+        "feather"
+      ],
+      "lead": [
+        "lead"
+      ],
+      "same": [
+        "same",
+        "equal",
+        "equally",
+        "neither",
+        "identical",
+        "tie"
+      ]
+    }
+  },
+  {
+    "id": "overthink-10",
+    "type": "overthink",
+    "prompt": "Which weighs more, 7 kilograms of feathers or 4 kilograms of lead? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "feathers",
+    "accept": [],
+    "grader": "choice",
+    "options": {
+      "feathers": [
+        "feathers",
+        "feather"
+      ],
+      "lead": [
+        "lead"
+      ],
+      "same": [
+        "same",
+        "equal",
+        "equally",
+        "neither",
+        "identical",
+        "tie"
+      ]
+    }
+  },
+  {
+    "id": "overthink-11",
+    "type": "overthink",
+    "prompt": "Which weighs more, 9 kilograms of feathers or 6 kilograms of lead? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "feathers",
+    "accept": [],
+    "grader": "choice",
+    "options": {
+      "feathers": [
+        "feathers",
+        "feather"
+      ],
+      "lead": [
+        "lead"
+      ],
+      "same": [
+        "same",
+        "equal",
+        "equally",
+        "neither",
+        "identical",
+        "tie"
+      ]
+    }
+  },
+  {
+    "id": "overthink-12",
+    "type": "overthink",
+    "prompt": "Which weighs more, 2 kilograms of feathers or 4 kilograms of lead? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "lead",
+    "accept": [],
+    "grader": "choice",
+    "options": {
+      "feathers": [
+        "feathers",
+        "feather"
+      ],
+      "lead": [
+        "lead"
+      ],
+      "same": [
+        "same",
+        "equal",
+        "equally",
+        "neither",
+        "identical",
+        "tie"
+      ]
+    }
+  },
+  {
+    "id": "overthink-13",
+    "type": "overthink",
+    "prompt": "Which weighs more, 3 kilograms of feathers or 10 kilograms of lead? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "lead",
+    "accept": [],
+    "grader": "choice",
+    "options": {
+      "feathers": [
+        "feathers",
+        "feather"
+      ],
+      "lead": [
+        "lead"
+      ],
+      "same": [
+        "same",
+        "equal",
+        "equally",
+        "neither",
+        "identical",
+        "tie"
+      ]
+    }
+  },
+  {
+    "id": "overthink-14",
+    "type": "overthink",
+    "prompt": "Which weighs more, 5 kilograms of feathers or 6 kilograms of lead? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "lead",
+    "accept": [],
+    "grader": "choice",
+    "options": {
+      "feathers": [
+        "feathers",
+        "feather"
+      ],
+      "lead": [
+        "lead"
+      ],
+      "same": [
+        "same",
+        "equal",
+        "equally",
+        "neither",
+        "identical",
+        "tie"
+      ]
+    }
+  },
+  {
+    "id": "overthink-15",
+    "type": "overthink",
+    "prompt": "Which weighs more, 1 kilograms of feathers or 8 kilograms of lead? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "lead",
+    "accept": [],
+    "grader": "choice",
+    "options": {
+      "feathers": [
+        "feathers",
+        "feather"
+      ],
+      "lead": [
+        "lead"
+      ],
+      "same": [
+        "same",
+        "equal",
+        "equally",
+        "neither",
+        "identical",
+        "tie"
+      ]
+    }
+  },
+  {
+    "id": "overthink-16",
+    "type": "overthink",
+    "prompt": "You are running a race and you overtake the runner in second place. What place are you in now? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "second",
+    "accept": [],
+    "grader": "choice",
+    "options": {
+      "first": [
+        "first",
+        "1st"
+      ],
+      "second": [
+        "second",
+        "2nd"
+      ],
+      "third": [
+        "third",
+        "3rd"
+      ],
+      "fourth": [
+        "fourth",
+        "4th"
+      ],
+      "fifth": [
+        "fifth",
+        "5th"
+      ],
+      "last": [
+        "last"
+      ]
+    }
+  },
+  {
+    "id": "overthink-17",
+    "type": "overthink",
+    "prompt": "You are running a race and you overtake the runner in third place. What place are you in now? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "third",
+    "accept": [],
+    "grader": "choice",
+    "options": {
+      "first": [
+        "first",
+        "1st"
+      ],
+      "second": [
+        "second",
+        "2nd"
+      ],
+      "third": [
+        "third",
+        "3rd"
+      ],
+      "fourth": [
+        "fourth",
+        "4th"
+      ],
+      "fifth": [
+        "fifth",
+        "5th"
+      ],
+      "last": [
+        "last"
+      ]
+    }
+  },
+  {
+    "id": "overthink-18",
+    "type": "overthink",
+    "prompt": "You are running a race and you overtake the runner in fourth place. What place are you in now? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "fourth",
+    "accept": [],
+    "grader": "choice",
+    "options": {
+      "first": [
+        "first",
+        "1st"
+      ],
+      "second": [
+        "second",
+        "2nd"
+      ],
+      "third": [
+        "third",
+        "3rd"
+      ],
+      "fourth": [
+        "fourth",
+        "4th"
+      ],
+      "fifth": [
+        "fifth",
+        "5th"
+      ],
+      "last": [
+        "last"
+      ]
+    }
+  },
+  {
+    "id": "overthink-19",
+    "type": "overthink",
+    "prompt": "You are running a race and you overtake the runner in fifth place. What place are you in now? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "fifth",
+    "accept": [],
+    "grader": "choice",
+    "options": {
+      "first": [
+        "first",
+        "1st"
+      ],
+      "second": [
+        "second",
+        "2nd"
+      ],
+      "third": [
+        "third",
+        "3rd"
+      ],
+      "fourth": [
+        "fourth",
+        "4th"
+      ],
+      "fifth": [
+        "fifth",
+        "5th"
+      ],
+      "last": [
+        "last"
+      ]
+    }
+  },
+  {
+    "id": "overthink-20",
+    "type": "overthink",
+    "prompt": "How many months of the year have 28 days? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "12",
+    "accept": [
+      "twelve",
+      "all"
+    ],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-21",
+    "type": "overthink",
+    "prompt": "How many months of the year have at least 30 days? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "11",
+    "accept": [
+      "eleven"
+    ],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-22",
+    "type": "overthink",
+    "prompt": "Mia's mother has four daughters. Three of them are named April, May and June. What is the fourth daughter's name? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Mia",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "overthink-23",
+    "type": "overthink",
+    "prompt": "Priya's mother has four daughters. Three of them are named April, May and June. What is the fourth daughter's name? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Priya",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "overthink-24",
+    "type": "overthink",
+    "prompt": "Rosa's mother has four daughters. Three of them are named April, May and June. What is the fourth daughter's name? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Rosa",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "overthink-25",
+    "type": "overthink",
+    "prompt": "Hana's mother has four daughters. Three of them are named April, May and June. What is the fourth daughter's name? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Hana",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "overthink-26",
+    "type": "overthink",
+    "prompt": "How many times does the letter 'k' appear in the word 'bookkeeper'? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "3",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-27",
+    "type": "overthink",
+    "prompt": "How many times does the letter 's' appear in the word 'Mississippi'? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "4",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-28",
+    "type": "overthink",
+    "prompt": "How many times does the letter 'a' appear in the word 'banana'? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "3",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-29",
+    "type": "overthink",
+    "prompt": "How many times does the letter 't' appear in the word 'committee'? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "2",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-30",
+    "type": "overthink",
+    "prompt": "A butcher is 175 centimetres tall and wears size 44 shoes. What does he weigh? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "meat",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "overthink-31",
+    "type": "overthink",
+    "prompt": "If a red house is made of red bricks and a blue house is made of blue bricks, what is a greenhouse made of? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "glass",
+    "accept": [],
+    "grader": "text"
+  },
+  {
+    "id": "overthink-32",
+    "type": "overthink",
+    "prompt": "A plane crashes exactly on the border between two countries. Where are the survivors buried? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "nowhere",
+    "accept": [
+      "not buried",
+      "do not bury",
+      "don't bury",
+      "you do not bury the survivors",
+      "survivors are not buried",
+      "they are alive"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "overthink-33",
+    "type": "overthink",
+    "prompt": "Some months have 31 days and some have 30. How many have 31 days? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "7",
+    "accept": [
+      "seven"
+    ],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-34",
+    "type": "overthink",
+    "prompt": "A rooster lays an egg on the exact peak of a roof. Which side does the egg roll down? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "neither",
+    "accept": [],
+    "grader": "choice",
+    "options": {
+      "left": [
+        "left"
+      ],
+      "right": [
+        "right"
+      ],
+      "neither": [
+        "neither",
+        "no side",
+        "none",
+        "roosters do not lay",
+        "roosters don't lay",
+        "does not lay",
+        "doesn't lay",
+        "cannot lay",
+        "no egg"
+      ]
+    }
+  },
+  {
+    "id": "overthink-35",
+    "type": "overthink",
+    "prompt": "Divide 30 by one half and add 10. What is the result? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "70",
+    "accept": [],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-36",
+    "type": "overthink",
+    "prompt": "If it takes 5 machines 5 minutes to make 5 widgets, how long would 100 machines take to make 100 widgets? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "5",
+    "accept": [
+      "five",
+      "5 minutes"
+    ],
+    "grader": "numeric"
+  },
+  {
+    "id": "overthink-37",
+    "type": "overthink",
+    "prompt": "Before Mount Everest was discovered, what was the tallest mountain on Earth? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "Everest",
+    "accept": [
+      "Mount Everest",
+      "Everest, it was still the tallest"
+    ],
+    "grader": "text"
+  },
+  {
+    "id": "overthink-38",
+    "type": "overthink",
+    "prompt": "You enter a dark room carrying one match. The room contains an oil lamp, a candle and a wood fire. What do you light first? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "match",
+    "accept": [],
+    "grader": "choice",
+    "options": {
+      "match": [
+        "match",
+        "matchstick"
+      ],
+      "lamp": [
+        "lamp",
+        "oil lamp"
+      ],
+      "candle": [
+        "candle"
+      ],
+      "fire": [
+        "fire",
+        "wood fire",
+        "fireplace"
+      ]
+    }
+  },
+  {
+    "id": "overthink-39",
+    "type": "overthink",
+    "prompt": "How many animals of each kind did Moses take onto the ark? End your reply with a line of the form 'Answer: <answer>'.",
+    "answer": "none",
+    "accept": [
+      "zero",
+      "0",
+      "moses did not",
+      "it was noah",
+      "noah not moses"
+    ],
+    "grader": "text"
+  }
+]
