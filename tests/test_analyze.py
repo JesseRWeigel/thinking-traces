@@ -51,11 +51,15 @@ class AnalyzeCase(unittest.TestCase):
         self.items = build_items()
         self.tmp = tempfile.TemporaryDirectory()
         self.raw = Path(self.tmp.name) / "raw"
+        self.rep = Path(self.tmp.name) / "replicate"
         self._orig = A.RAW_DIR
+        self._orig_rep = A.REPLICATE_DIR
         A.RAW_DIR = self.raw
+        A.REPLICATE_DIR = self.rep
 
     def tearDown(self):
         A.RAW_DIR = self._orig
+        A.REPLICATE_DIR = self._orig_rep
         self.tmp.cleanup()
 
     def arith(self, n):
@@ -242,6 +246,115 @@ class TestFlagEvidence(AnalyzeCase):
                 A.main()
         finally:
             A.OUT = orig_out
+
+
+class TestNoiseFloor(AnalyzeCase):
+    def _main_run(self, n=20):
+        recs = []
+        for item in self.arith(n):
+            recs.append(record(item, False, f"Answer: {item['answer']}"))
+            recs.append(record(item, True, f"Answer: {item['answer']}", thinking="r"))
+        write_raw(self.raw, recs)
+        return self.arith(n)
+
+    def test_unmeasured_is_reported_as_unmeasured_not_as_zero(self):
+        self._main_run()
+        s = A.analyze()
+        self.assertFalse(s["noise_floor"]["measured"])
+        self.assertIn("reason", s["noise_floor"])
+        # None, not False. "Could not check" and "checked, found nothing" are
+        # different values and downstream code has to be able to tell them apart.
+        self.assertTrue(all(c["clears_noise_floor"] is None for c in s["cells"]))
+
+    def test_a_perfectly_repeatable_backend_has_a_floor_above_zero_anyway(self):
+        # Zero observed flips still leaves an interval, because 0 of 20 does not
+        # prove a zero rate. The floor is the upper bound, so it must exceed zero.
+        items = self._main_run()
+        reps = []
+        for item in items[:10]:
+            reps.append(record(item, False, f"Answer: {item['answer']}"))
+            reps.append(record(item, True, f"Answer: {item['answer']}", thinking="r"))
+        write_raw(self.rep, reps)
+        s = A.analyze()
+        floor = s["noise_floor"]
+        self.assertTrue(floor["measured"])
+        for cell in floor["by_condition"].values():
+            self.assertEqual(cell["grade_flips"], 0)
+        self.assertGreater(floor["floor_upper_bound"], 0.0)
+
+    def test_flips_are_counted_and_raise_the_floor(self):
+        items = self._main_run()
+        reps = []
+        for i, item in enumerate(items[:10]):
+            # Half the replicated think-on responses come back wrong this time.
+            good = f"Answer: {item['answer']}"
+            reps.append(record(item, False, good))
+            reps.append(record(item, True, good if i >= 5 else "Answer: 0", thinking="r"))
+        write_raw(self.rep, reps)
+        floor = A.analyze()["noise_floor"]
+        on = floor["by_condition"]["fake:1b|on"]
+        off = floor["by_condition"]["fake:1b|off"]
+        self.assertEqual(on["grade_flips"], 5)
+        self.assertEqual(off["grade_flips"], 0)
+        self.assertAlmostEqual(on["grade_flip_rate"], 0.5)
+        self.assertGreater(floor["floor_upper_bound"], 0.5)
+
+    def test_negative_control_a_bigger_flip_rate_gives_a_higher_floor(self):
+        items = self._main_run()
+        write_raw(self.rep, [record(i, True, f"Answer: {i['answer']}", thinking="r")
+                             for i in items[:10]])
+        low = A.analyze()["noise_floor"]["floor_upper_bound"]
+        self.tearDown()
+        self.setUp()
+        items = self._main_run()
+        write_raw(self.rep, [record(i, True, "Answer: 0", thinking="r") for i in items[:10]])
+        high = A.analyze()["noise_floor"]["floor_upper_bound"]
+        self.assertGreater(high, low)
+
+    def test_an_effect_below_the_floor_does_not_clear_it(self):
+        # Main run: thinking on wins one extra item out of twenty, a 5 point effect.
+        items = self.arith(20)
+        recs = []
+        for i, item in enumerate(items):
+            recs.append(record(item, False, "Answer: 0" if i == 0 else f"Answer: {item['answer']}"))
+            recs.append(record(item, True, f"Answer: {item['answer']}", thinking="r"))
+        write_raw(self.raw, recs)
+        # Replicate: the backend flips half its own grades, a floor far above 5 points.
+        reps = []
+        for i, item in enumerate(items[:10]):
+            reps.append(record(item, False, f"Answer: {item['answer']}" if i >= 5 else "Answer: 0"))
+            reps.append(record(item, True, f"Answer: {item['answer']}", thinking="r"))
+        write_raw(self.rep, reps)
+        s = A.analyze()
+        cell = next(c for c in s["cells"] if c["type"] == "arith")
+        self.assertAlmostEqual(cell["paired"]["mean"], 0.05)
+        self.assertGreater(s["noise_floor"]["floor_upper_bound"], 0.05)
+        self.assertFalse(cell["clears_noise_floor"])
+
+    def test_negative_control_a_large_effect_clears_a_small_floor(self):
+        items = self.arith(20)
+        recs = []
+        for item in items:
+            recs.append(record(item, False, "Answer: 0"))
+            recs.append(record(item, True, f"Answer: {item['answer']}", thinking="r"))
+        write_raw(self.raw, recs)
+        reps = []
+        for item in items:
+            reps.append(record(item, False, "Answer: 0"))
+            reps.append(record(item, True, f"Answer: {item['answer']}", thinking="r"))
+        write_raw(self.rep, reps)
+        s = A.analyze()
+        cell = next(c for c in s["cells"] if c["type"] == "arith")
+        self.assertAlmostEqual(cell["paired"]["mean"], 1.0)
+        self.assertTrue(cell["clears_noise_floor"])
+
+    def test_replicates_for_an_unseen_condition_are_ignored_rather_than_crashing(self):
+        self._main_run()
+        stray = record(self.arith(1)[0], False, "Answer: 1")
+        stray["model"] = "other:1b"
+        write_raw(self.rep, [stray])
+        floor = A.analyze()["noise_floor"]
+        self.assertNotIn("other:1b|off", floor["by_condition"])
 
 
 if __name__ == "__main__":
