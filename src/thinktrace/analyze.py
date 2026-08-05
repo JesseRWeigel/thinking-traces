@@ -97,6 +97,10 @@ def analyze() -> dict:
     evidence = thinking_evidence(records)
 
     cells: list[dict] = []
+    # A cell with data for only one condition cannot be compared. Dropping it
+    # quietly would let a half finished run publish a table that looks complete,
+    # so the omission is recorded and reported rather than swallowed.
+    incomplete: list[dict] = []
     for model in models:
         for ttype in TASK_TYPES:
             by_cond = {}
@@ -127,6 +131,10 @@ def analyze() -> dict:
                     "load_s_total": sum(g["load_s"] for g in sel),
                 }
             if set(by_cond) != {"on", "off"}:
+                incomplete.append({
+                    "model": model, "type": ttype,
+                    "conditions_present": sorted(by_cond),
+                })
                 continue
 
             on_by_item = {g["item_id"]: g for g in graded
@@ -197,6 +205,7 @@ def analyze() -> dict:
             "interval": "95 percent, Wilson for single accuracies, paired normal for differences",
         },
         "flag_check": evidence,
+        "incomplete_cells": incomplete,
         "cells": cells,
         "totals": {
             model: {

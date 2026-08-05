@@ -148,6 +148,26 @@ class TestUsability(AnalyzeCase):
         self.assertEqual(cell["on"]["correct"], 0)
 
 
+class TestIncompleteRuns(AnalyzeCase):
+    def test_a_condition_with_no_data_is_recorded_not_dropped(self):
+        recs = [record(item, False, "Answer: 1") for item in self.arith(10)]
+        write_raw(self.raw, recs)
+        s = A.analyze()
+        self.assertEqual(s["cells"], [])
+        self.assertTrue(any(c["type"] == "arith" for c in s["incomplete_cells"]))
+        self.assertEqual(s["incomplete_cells"][0]["conditions_present"], ["off"])
+
+    def test_negative_control_a_complete_cell_is_not_recorded_as_incomplete(self):
+        recs = []
+        for item in self.arith(10):
+            recs.append(record(item, False, "Answer: 1"))
+            recs.append(record(item, True, "Answer: 1", thinking="r"))
+        write_raw(self.raw, recs)
+        s = A.analyze()
+        self.assertTrue(any(c["type"] == "arith" for c in s["cells"]))
+        self.assertNotIn("arith", [c["type"] for c in s["incomplete_cells"]])
+
+
 class TestFlagEvidence(AnalyzeCase):
     def _records(self, on_thinking: str, off_thinking: str = ""):
         recs = []

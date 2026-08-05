@@ -312,6 +312,13 @@ function main() {
     }
   }
 
+  // A published summary must cover every model and task type. An omission that
+  // the aggregator recorded as "incomplete" is still an omission.
+  const models = [...new Set(graded.map((g) => g.model))].sort();
+  const types = [...new Set(graded.map((g) => g.type))].sort();
+  eq('cell count', summary.cells.length, models.length * types.length);
+  eq('incomplete cells', (summary.incomplete_cells || []).length, 0);
+
   for (const cell of summary.cells) {
     const tag = `${cell.model}/${cell.type}`;
     const byCond = {};
