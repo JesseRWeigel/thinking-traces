@@ -42,6 +42,34 @@ else
   ok "$RAW_COUNT cached raw responses across $(ls data/raw/*.jsonl | wc -l) condition files"
 fi
 
+step "every cached response still belongs to its prompt"
+PYTHONPATH=src python3 - <<'PY' || bad "cached responses do not match the current item set"
+import json, pathlib, sys
+sys.path.insert(0, "src")
+from thinktrace.items import build_items
+from thinktrace.runner import prompt_sha
+
+want = {i["id"]: prompt_sha(i["prompt"]) for i in build_items()}
+problems, checked = [], 0
+for path in sorted(pathlib.Path("data/raw").glob("*.jsonl")):
+    for n, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        rec = json.loads(line)
+        checked += 1
+        if rec["item_id"] not in want:
+            problems.append(f"{path.name}:{n} unknown item {rec['item_id']}")
+        elif "prompt_sha" not in rec:
+            problems.append(f"{path.name}:{n} {rec['item_id']} has no prompt fingerprint")
+        elif rec["prompt_sha"] != want[rec["item_id"]]:
+            problems.append(f"{path.name}:{n} {rec['item_id']} was collected against a "
+                            "different prompt, delete the line and re-run it")
+print(f"    checked {checked} responses against the current item set")
+for p in problems[:8]:
+    print(f"    FAIL {p}")
+sys.exit(1 if problems else 0)
+PY
+
 # ------------------------------------------------------------------- unit suite
 step "unit suite"
 UNIT_LOG="$TMP/unit.log"

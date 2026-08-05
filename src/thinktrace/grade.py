@@ -24,7 +24,7 @@ FENCE_RE = re.compile(r"^\s*```[a-zA-Z0-9]*\s*\n(.*?)\n\s*```\s*$", re.DOTALL)
 # Models wrap the label in markdown bold in several different places, so the
 # asterisks are tolerated on either side of the colon and stripped from the value.
 ANSWER_RE = re.compile(
-    r"^\s*\*{0,2}\s*answer\s*\*{0,2}\s*[:\-]\s*\*{0,2}\s*(.*?)[\s*]*$", re.IGNORECASE
+    r"\*{0,2}\s*\banswer\s*\*{0,2}\s*[:\-]\s*\*{0,2}\s*(.*?)[\s*]*$", re.IGNORECASE
 )
 NUM_RE = re.compile(r"-?\d[\d,]*(?:\.\d+)?")
 
@@ -49,8 +49,12 @@ def extract_answer(content: str) -> str:
     """
     body = strip_fences(content or "")
     lines = [ln.rstrip() for ln in body.splitlines()]
+    # The label is searched for anywhere in the line, not only at its start.
+    # Models routinely emit the whole response on one line, as in
+    # "The currency of South Korea is the won. Answer: Won", and anchoring to the
+    # line start scored several of those as unanswered.
     for line in reversed(lines):
-        m = ANSWER_RE.match(line)
+        m = ANSWER_RE.search(line)
         if m and m.group(1).strip():
             return m.group(1).strip()
     for line in reversed(lines):

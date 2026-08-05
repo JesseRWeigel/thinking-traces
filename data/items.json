@@ -242,7 +242,7 @@
   {
     "id": "arith-06-0",
     "type": "arith",
-    "prompt": "A library buys 34 books per month for 17 months, donates 63 books, and then buys 17 more. How many books did it add in total? End your reply with a line of the form 'Answer: <answer>'.",
+    "prompt": "A library starts the year with no books. It buys 34 books per month for 17 months, gives 63 books away, and then buys 17 more. How many books does the library have at the end of the year? End your reply with a line of the form 'Answer: <answer>'.",
     "answer": "532",
     "accept": [],
     "grader": "numeric"
@@ -250,7 +250,7 @@
   {
     "id": "arith-06-1",
     "type": "arith",
-    "prompt": "A library buys 19 books per month for 25 months, donates 95 books, and then buys 13 more. How many books did it add in total? End your reply with a line of the form 'Answer: <answer>'.",
+    "prompt": "A library starts the year with no books. It buys 19 books per month for 25 months, gives 95 books away, and then buys 13 more. How many books does the library have at the end of the year? End your reply with a line of the form 'Answer: <answer>'.",
     "answer": "393",
     "accept": [],
     "grader": "numeric"
@@ -258,7 +258,7 @@
   {
     "id": "arith-06-2",
     "type": "arith",
-    "prompt": "A library buys 11 books per month for 24 months, donates 94 books, and then buys 13 more. How many books did it add in total? End your reply with a line of the form 'Answer: <answer>'.",
+    "prompt": "A library starts the year with no books. It buys 11 books per month for 24 months, gives 94 books away, and then buys 13 more. How many books does the library have at the end of the year? End your reply with a line of the form 'Answer: <answer>'.",
     "answer": "183",
     "accept": [],
     "grader": "numeric"
@@ -266,7 +266,7 @@
   {
     "id": "arith-06-3",
     "type": "arith",
-    "prompt": "A library buys 21 books per month for 27 months, donates 88 books, and then buys 19 more. How many books did it add in total? End your reply with a line of the form 'Answer: <answer>'.",
+    "prompt": "A library starts the year with no books. It buys 21 books per month for 27 months, gives 88 books away, and then buys 19 more. How many books does the library have at the end of the year? End your reply with a line of the form 'Answer: <answer>'.",
     "answer": "498",
     "accept": [],
     "grader": "numeric"
@@ -274,7 +274,7 @@
   {
     "id": "arith-06-4",
     "type": "arith",
-    "prompt": "A library buys 25 books per month for 20 months, donates 48 books, and then buys 12 more. How many books did it add in total? End your reply with a line of the form 'Answer: <answer>'.",
+    "prompt": "A library starts the year with no books. It buys 25 books per month for 20 months, gives 48 books away, and then buys 12 more. How many books does the library have at the end of the year? End your reply with a line of the form 'Answer: <answer>'.",
     "answer": "464",
     "accept": [],
     "grader": "numeric"
@@ -1980,7 +1980,7 @@
     "id": "overthink-26",
     "type": "overthink",
     "prompt": "How many times does the letter 'k' appear in the word 'bookkeeper'? End your reply with a line of the form 'Answer: <answer>'.",
-    "answer": "3",
+    "answer": "2",
     "accept": [],
     "grader": "numeric"
   },
@@ -2028,16 +2028,36 @@
     "id": "overthink-32",
     "type": "overthink",
     "prompt": "A plane crashes exactly on the border between two countries. Where are the survivors buried? End your reply with a line of the form 'Answer: <answer>'.",
-    "answer": "nowhere",
-    "accept": [
-      "not buried",
-      "do not bury",
-      "don't bury",
-      "you do not bury the survivors",
-      "survivors are not buried",
-      "they are alive"
-    ],
-    "grader": "text"
+    "answer": "no burial",
+    "accept": [],
+    "grader": "choice",
+    "options": {
+      "no burial": [
+        "not buried",
+        "no burial",
+        "nowhere",
+        "do not bury",
+        "don't bury",
+        "you don't bury",
+        "no survivors to be buried",
+        "survivors are alive",
+        "they are alive",
+        "no one is buried",
+        "nobody is buried",
+        "survivors are not buried",
+        "cannot be buried",
+        "aren't buried"
+      ],
+      "border": [
+        "border",
+        "crash site"
+      ],
+      "home country": [
+        "home country",
+        "own country",
+        "their country"
+      ]
+    }
   },
   {
     "id": "overthink-33",

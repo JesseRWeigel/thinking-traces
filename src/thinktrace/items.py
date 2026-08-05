@@ -81,8 +81,12 @@ def _arith_items(rng: random.Random) -> list[dict]:
             lambda a, b, c, d: (a - b + c) // 2 + d,
         ),
         (
-            "A library buys {a} books per month for {b} months, donates {c} books, "
-            "and then buys {d} more. How many books did it add in total?",
+            # "How many did it add in total" was ambiguous: donations are arguably
+            # not additions, and every response computed a*b + d. The reading is
+            # pinned down instead of counting a defensible answer as wrong.
+            "A library starts the year with no books. It buys {a} books per month for "
+            "{b} months, gives {c} books away, and then buys {d} more. "
+            "How many books does the library have at the end of the year?",
             lambda a, b, c, d: a * b - c + d,
         ),
         (
@@ -451,16 +455,18 @@ def _overthink_items(rng: random.Random) -> list[dict]:
             name,
             [],
         )
-    # literal counting with a distracting frame
-    for word, letter, count in [
-        ("bookkeeper", "k", 3),
-        ("Mississippi", "s", 4),
-        ("banana", "a", 3),
-        ("committee", "t", 2),
+    # Literal counting. The answer is computed from the word rather than typed in,
+    # because a hand written count is a ground truth error waiting to happen. One
+    # was: bookkeeper was labelled with three k and it has two.
+    for word, letter in [
+        ("bookkeeper", "k"),
+        ("Mississippi", "s"),
+        ("banana", "a"),
+        ("committee", "t"),
     ]:
         add(
             f"How many times does the letter '{letter}' appear in the word '{word}'?",
-            str(count),
+            str(word.lower().count(letter.lower())),
             [],
             "numeric",
         )
@@ -476,18 +482,26 @@ def _overthink_items(rng: random.Random) -> list[dict]:
         "glass",
         [],
     )
+    # Graded as a choice rather than free text. The question is whether the model
+    # names a burial location at all, so every way of declining to name one has to
+    # count the same. Otherwise the grader measures phrasing, and phrasing is
+    # exactly what changes between the two conditions being compared.
     add(
         "A plane crashes exactly on the border between two countries. "
         "Where are the survivors buried?",
-        "nowhere",
-        [
-            "not buried",
-            "do not bury",
-            "don't bury",
-            "you do not bury the survivors",
-            "survivors are not buried",
-            "they are alive",
-        ],
+        "no burial",
+        [],
+        "choice",
+        {
+            "no burial": [
+                "not buried", "no burial", "nowhere", "do not bury", "don't bury",
+                "you don't bury", "no survivors to be buried", "survivors are alive",
+                "they are alive", "no one is buried", "nobody is buried",
+                "survivors are not buried", "cannot be buried", "aren't buried",
+            ],
+            "border": ["border", "crash site"],
+            "home country": ["home country", "own country", "their country"],
+        },
     )
     add(
         "Some months have 31 days and some have 30. How many have 31 days?",

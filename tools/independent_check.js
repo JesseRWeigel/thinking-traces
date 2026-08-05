@@ -58,7 +58,9 @@ function stripFences(text) {
 
 function extractAnswer(content) {
   const lines = stripFences(content || '').split('\n').map((l) => l.replace(/\s+$/, ''));
-  const label = /^\s*\*{0,2}\s*answer\s*\*{0,2}\s*[:\-]\s*\*{0,2}\s*(.*?)[\s*]*$/i;
+  // Searched anywhere in the line, not anchored to its start: models often put
+  // the whole response and its answer label on a single line.
+  const label = /\*{0,2}\s*\banswer\s*\*{0,2}\s*[:\-]\s*\*{0,2}\s*(.*?)[\s*]*$/i;
   for (let i = lines.length - 1; i >= 0; i -= 1) {
     const m = label.exec(lines[i]);
     if (m && m[1].trim()) return m[1].trim();

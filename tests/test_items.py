@@ -93,6 +93,25 @@ class TestItemSet(unittest.TestCase):
     def test_negative_control_an_unconstrained_puzzle_has_many_solutions(self):
         self.assertEqual(len(solve_deduction("Who finished in position 1?")), 120)
 
+    def test_letter_count_ground_truth_is_recomputable_from_the_prompt(self):
+        # A hand typed count was wrong once here (bookkeeper labelled with three k
+        # when it has two), so the count is re-derived from the words in the prompt.
+        rx = re.compile(r"the letter '(\w)' appear in the word '(\w+)'")
+        found = 0
+        for item in [i for i in self.items if i["type"] == "overthink"]:
+            m = rx.search(item["prompt"])
+            if not m:
+                continue
+            found += 1
+            letter, word = m.group(1), m.group(2)
+            self.assertEqual(int(item["answer"]), word.lower().count(letter.lower()),
+                             f"{item['id']} {word}/{letter}")
+        self.assertGreaterEqual(found, 4, "letter counting items disappeared")
+
+    def test_negative_control_a_wrong_letter_count_would_be_caught(self):
+        self.assertNotEqual("bookkeeper".count("k"), 3)
+        self.assertEqual("bookkeeper".count("k"), 2)
+
     def test_arithmetic_answers_are_positive_integers(self):
         for item in [i for i in self.items if i["type"] == "arith"]:
             self.assertRegex(item["answer"], r"^\d+$", item["id"])

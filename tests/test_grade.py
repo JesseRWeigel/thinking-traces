@@ -39,6 +39,14 @@ class TestExtraction(unittest.TestCase):
     def test_handles_bold_markdown_label(self):
         self.assertEqual(extract_answer("**Answer:** Ben"), "Ben")
 
+    def test_finds_the_label_mid_line(self):
+        line = "The currency of South Korea is the won. Answer: Won"
+        self.assertEqual(extract_answer(line), "Won")
+
+    def test_negative_control_a_line_without_the_label_is_not_split(self):
+        line = "The currency of South Korea is the won."
+        self.assertEqual(extract_answer(line), line)
+
     def test_strips_code_fences(self):
         self.assertEqual(strip_fences('```json\n{"a": 1}\n```'), '{"a": 1}')
 

@@ -21,6 +21,7 @@ Two things this guards against:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import time
@@ -34,6 +35,17 @@ OLLAMA = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
 NUM_PREDICT = 4096
 TEMPERATURE = 0.0
 ROOT = Path(__file__).resolve().parents[2]
+
+
+def prompt_sha(prompt: str) -> str:
+    """Fingerprint of the exact prompt a response was produced from.
+
+    Item ids are stable across edits, so a reworded prompt would otherwise leave
+    a stale response cached under the same id and nothing would notice. The
+    fingerprint makes that mismatch loud: verify recomputes it from the current
+    item set and fails on any response that no longer belongs to its prompt.
+    """
+    return hashlib.sha256(prompt.encode("utf-8")).hexdigest()[:16]
 
 
 def raw_path(model: str, think: bool) -> Path:
@@ -86,6 +98,7 @@ def run(model: str, think: bool, limit: int | None = None, resume: bool = True) 
             msg = body.get("message", {}) or {}
             rec = {
                 "item_id": item["id"],
+                "prompt_sha": prompt_sha(item["prompt"]),
                 "type": item["type"],
                 "model": model,
                 "think_requested": think,
