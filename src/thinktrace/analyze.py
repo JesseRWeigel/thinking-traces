@@ -122,6 +122,12 @@ def analyze() -> dict:
                     "accuracy": k / n,
                     "acc_lo": lo,
                     "acc_hi": hi,
+                    # Accuracy among responses that produced something to grade.
+                    # Reported alongside the headline because a cell can score low
+                    # for two completely different reasons: the model answered and
+                    # was wrong, or the model spent its whole budget reasoning and
+                    # never answered. Those call for opposite fixes.
+                    "accuracy_usable": (k / usable) if usable else None,
                     "gen_tokens_total": sum(g["gen_tokens"] for g in sel),
                     "gen_tokens_mean": sum(g["gen_tokens"] for g in sel) / n,
                     "wall_s_total": sum(g["wall_s"] for g in sel),
@@ -145,6 +151,20 @@ def analyze() -> dict:
             diffs = [float(on_by_item[i]["correct"]) - float(off_by_item[i]["correct"])
                      for i in shared]
             pd = paired_diff(diffs)
+
+            # The same paired comparison restricted to items where BOTH conditions
+            # produced an answer. This is the "when it answered at all, did the
+            # reasoning help" question, and it is the one that separates a model
+            # reasoning itself into a wrong answer from a model running out of
+            # tokens. Both numbers are published because neither alone is the story.
+            both = [i for i in shared
+                    if on_by_item[i]["usable"] and off_by_item[i]["usable"]]
+            diffs_both = [float(on_by_item[i]["correct"]) - float(off_by_item[i]["correct"])
+                          for i in both]
+            pd_both = paired_diff(diffs_both)
+
+            on_trunc = by_cond["on"]["truncated"]
+            off_trunc = by_cond["off"]["truncated"]
             flips = {
                 "on_only": sum(1 for d in diffs if d > 0),
                 "off_only": sum(1 for d in diffs if d < 0),
@@ -169,12 +189,19 @@ def analyze() -> dict:
                 "off": by_cond["off"],
                 "on": by_cond["on"],
                 "paired": pd,
+                "paired_usable_only": pd_both,
                 "flips": flips,
                 "verdict": (
                     "helps" if pd["significant"] and pd["mean"] > 0 else
                     "hurts" if pd["significant"] and pd["mean"] < 0 else
                     "indistinguishable"
                 ),
+                # A cell where thinking on ran out of budget on at least a tenth of
+                # the items, more often than thinking off did. The accuracy drop
+                # there is mostly missing output rather than bad reasoning, and
+                # saying "thinking hurt" without saying that would be misleading.
+                "budget_limited": (on_trunc / by_cond["on"]["n"] >= 0.10
+                                   and on_trunc > off_trunc),
                 "token_ratio": tokens["ratio"],
                 "tokens": tokens,
                 "wall": wall,

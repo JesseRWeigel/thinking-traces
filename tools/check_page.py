@@ -49,6 +49,11 @@ def main() -> int:
         # Usable counts have to be on the page, or a zero accuracy cell is
         # indistinguishable from a cell that produced nothing to grade.
         want(f"{cell['off']['usable']} / {cell['on']['usable']}", f"{tag} usable counts")
+        for cond in ("off", "on"):
+            v = cell[cond]["accuracy_usable"]
+            want("n/a" if v is None else f"{v * 100:.1f}%", f"{tag} {cond} accuracy among usable")
+        if cell["budget_limited"]:
+            want("budget limited", f"{tag} budget limited marker")
 
     for model, ev in summary["flag_check"].items():
         want(model, "model name")

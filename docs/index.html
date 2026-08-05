@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What thinking traces actually buy you, per task type</title>
+<meta name="description" content="Thinking on versus thinking off, measured per task type on local models at temperature 0, with intervals and token cost.">
+<style>
+:root { color-scheme: light dark;
+  --bg:#ffffff; --fg:#16181d; --muted:#5b6270; --line:#dfe3ea; --card:#f6f8fb;
+  --good:#0d6b3f; --bad:#9a2515; --flat:#5b6270; --accent:#1f4fd8; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#0f1116; --fg:#e6e8ee; --muted:#9aa3b2; --line:#262b36; --card:#161a22;
+          --good:#4ade80; --bad:#f87171; --flat:#9aa3b2; --accent:#7aa2ff; } }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+main { max-width: 62rem; margin: 0 auto; padding: 2rem 1rem 5rem; }
+h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); line-height:1.2; margin:0 0 .4rem; }
+h2 { font-size: 1.25rem; margin: 2.4rem 0 .6rem; }
+h3 { font-size: 1.02rem; margin: 1.6rem 0 .4rem; }
+p, li { color: var(--fg); }
+.sub { color: var(--muted); margin:0 0 1.6rem; }
+a { color: var(--accent); }
+.scroll { overflow-x: auto; border:1px solid var(--line); border-radius:10px; margin:.8rem 0 1.4rem; }
+table { border-collapse: collapse; width:100%; min-width: 46rem; font-size:.92rem; }
+th, td { padding:.5rem .7rem; text-align:right; border-bottom:1px solid var(--line); white-space:nowrap; }
+th:first-child, td:first-child { text-align:left; position:sticky; left:0; background:var(--bg); }
+thead th { background:var(--card); font-weight:600; color:var(--muted); text-align:right; }
+thead th:first-child { text-align:left; background:var(--card); }
+tbody tr:last-child td { border-bottom:none; }
+.ci { color: var(--muted); font-size:.85em; }
+.helps { color: var(--good); font-weight:600; }
+.hurts { color: var(--bad); font-weight:600; }
+.indistinguishable { color: var(--flat); }
+.budget { color: var(--bad); font-size:.78em; text-transform:uppercase; letter-spacing:.03em; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:10px;
+        padding:.9rem 1.1rem; margin:1rem 0; }
+.grid { display:grid; gap:.8rem; grid-template-columns:repeat(auto-fit,minmax(14rem,1fr)); }
+.k { color:var(--muted); font-size:.8rem; text-transform:uppercase; letter-spacing:.04em; }
+.v { font-size:1.5rem; font-weight:650; }
+code { background:var(--card); padding:.1rem .3rem; border-radius:4px; font-size:.9em; }
+footer { color:var(--muted); font-size:.85rem; margin-top:3rem; border-top:1px solid var(--line);
+         padding-top:1rem; }
+</style>
+</head>
+<body>
+<main>
+<h1>What thinking traces actually buy you, per task type</h1>
+<p class="sub">Thinking on versus thinking off on the same model, same items, temperature
+0.0, 40 items per task type.
+Intervals are 95 percent, Wilson for single accuracies, paired normal for differences.</p>
+
+<div class="card">
+<p><strong>How to read the verdict.</strong> The two conditions see identical items, so the
+honest comparison is the paired difference and its interval. When that interval contains
+zero the row reads <span class="indistinguishable">indistinguishable</span>, which is a
+statement about this sample size and not a claim that the effect is exactly zero. A row that
+reads indistinguishable while the token cost column reads several times over is the finding
+that matters: the traces were paid for and returned nothing measurable.</p>
+<p><strong>Two ways to lose.</strong> A cell can score low because the model answered and was
+wrong, or because it spent its whole token budget reasoning and never answered. Those are
+different problems with opposite fixes, so both are on the table. A row marked
+<span class="budget">budget limited</span> ran out of tokens on at least a tenth of its items with
+thinking on, more often than with thinking off, and its accuracy drop is mostly missing output
+rather than bad reasoning. The accuracy among usable responses is the column to read for those
+rows.</p>
+</div>
+
+<div class="card">
+<p><strong>Where the traces paid for themselves:</strong> none.</p>
+<p><strong>Where they cost at least twice the tokens and returned nothing measurable:</strong>
+qwen3.5:9b factual recall, qwen3.5:9b instruction following, qwen3:8b multi-step arithmetic, qwen3:8b logical deduction, qwen3:8b factual recall, qwen3:8b instruction following, qwen3:8b altered classics. Across those cells the traces burned 270,239 extra generated tokens for a difference this sample size cannot distinguish from zero.</p>
+<p><strong>Where they measurably hurt:</strong> qwen3.5:9b multi-step arithmetic, qwen3.5:9b logical deduction, qwen3.5:9b altered classics.
+Of those, 3 of 3 are budget limited, so the drop is mostly responses that never arrived.</p>
+<p><strong>Restricted to items answered in both conditions:</strong>
+no cell shows a difference this sample size can distinguish from zero. Across all 10 cells the traces cost
+499,809 extra generated tokens.</p>
+</div>
+
+
+<h2>qwen3.5:9b</h2>
+<div class="grid">
+  <div class="card"><div class="k">Accuracy, thinking off</div><div class="v">93.5%</div>
+    <div class="ci">187 of 200 items</div></div>
+  <div class="card"><div class="k">Accuracy, thinking on</div><div class="v">68.0%</div>
+    <div class="ci">136 of 200 items</div></div>
+  <div class="card"><div class="k">Generated tokens</div><div class="v">5.8x</div>
+    <div class="ci">65,071 off, 375,488 on</div></div>
+  <div class="card"><div class="k">Unusable, thinking on</div>
+    <div class="v">58</div>
+    <div class="ci">60 hit the 4096 token cap</div></div>
+</div>
+<div class="scroll"><table>
+<thead><tr>
+  <th>Task type</th><th>Acc, off</th><th>Acc, on</th><th>Paired diff (pts)</th><th>Verdict</th>
+  <th>Usable off / on</th><th>Acc among usable, off / on</th>
+  <th>Tok off</th><th>Tok on</th><th>Token cost</th>
+  <th>Pts / 1k extra tok</th><th>Extra decode</th><th>Pts / extra s</th>
+</tr></thead>
+<tbody><tr><td>Multi-step arithmetic</td><td>90.0%<br><span class='ci'>[76.9%, 96.0%]</span></td><td>70.0%<br><span class='ci'>[54.6%, 81.9%]</span></td><td>-20.0<br><span class='ci'>[-32.6, -7.4]</span></td><td><span class="hurts">hurts</span><br><span class='budget'>budget limited</span></td><td>40 / 33<br><span class='ci'>of 40</span></td><td>90.0% / 84.8%</td><td>262</td><td>2083</td><td>8.0x</td><td>-10.98</td><td>+15.4s</td><td>-1.30</td></tr><tr><td>Logical deduction</td><td>100.0%<br><span class='ci'>[91.2%, 100.0%]</span></td><td>15.0%<br><span class='ci'>[7.1%, 29.1%]</span></td><td>-85.0<br><span class='ci'>[-96.2, -73.8]</span></td><td><span class="hurts">hurts</span><br><span class='budget'>budget limited</span></td><td>40 / 7<br><span class='ci'>of 40</span></td><td>100.0% / 85.7%</td><td>1196</td><td>3927</td><td>3.3x</td><td>-31.12</td><td>+22.7s</td><td>-3.74</td></tr><tr><td>Factual recall</td><td>100.0%<br><span class='ci'>[91.2%, 100.0%]</span></td><td>100.0%<br><span class='ci'>[91.2%, 100.0%]</span></td><td>+0.0<br><span class='ci'>[+0.0, +0.0]</span></td><td><span class="indistinguishable">indistinguishable</span></td><td>40 / 40<br><span class='ci'>of 40</span></td><td>100.0% / 100.0%</td><td>59</td><td>516</td><td>8.8x</td><td>+0.00</td><td>+3.8s</td><td>+0.00</td></tr><tr><td>Instruction following</td><td>80.0%<br><span class='ci'>[65.2%, 89.5%]</span></td><td>67.5%<br><span class='ci'>[52.0%, 79.9%]</span></td><td>-12.5<br><span class='ci'>[-25.0, +0.0]</span></td><td><span class="indistinguishable">indistinguishable</span><br><span class='budget'>budget limited</span></td><td>40 / 27<br><span class='ci'>of 40</span></td><td>80.0% / 100.0%</td><td>10</td><td>1574</td><td>161.8x</td><td>-7.99</td><td>+13.4s</td><td>-0.94</td></tr><tr><td>Altered classics</td><td>97.5%<br><span class='ci'>[87.1%, 99.6%]</span></td><td>87.5%<br><span class='ci'>[73.9%, 94.5%]</span></td><td>-10.0<br><span class='ci'>[-19.4, -0.6]</span></td><td><span class="hurts">hurts</span><br><span class='budget'>budget limited</span></td><td>40 / 35<br><span class='ci'>of 40</span></td><td>97.5% / 100.0%</td><td>101</td><td>1288</td><td>12.7x</td><td>-8.43</td><td>+10.1s</td><td>-0.99</td></tr></tbody>
+</table></div>
+
+<h2>qwen3:8b</h2>
+<div class="grid">
+  <div class="card"><div class="k">Accuracy, thinking off</div><div class="v">91.5%</div>
+    <div class="ci">183 of 200 items</div></div>
+  <div class="card"><div class="k">Accuracy, thinking on</div><div class="v">90.5%</div>
+    <div class="ci">181 of 200 items</div></div>
+  <div class="card"><div class="k">Generated tokens</div><div class="v">5.2x</div>
+    <div class="ci">44,872 off, 234,264 on</div></div>
+  <div class="card"><div class="k">Unusable, thinking on</div>
+    <div class="v">5</div>
+    <div class="ci">11 hit the 4096 token cap</div></div>
+</div>
+<div class="scroll"><table>
+<thead><tr>
+  <th>Task type</th><th>Acc, off</th><th>Acc, on</th><th>Paired diff (pts)</th><th>Verdict</th>
+  <th>Usable off / on</th><th>Acc among usable, off / on</th>
+  <th>Tok off</th><th>Tok on</th><th>Token cost</th>
+  <th>Pts / 1k extra tok</th><th>Extra decode</th><th>Pts / extra s</th>
+</tr></thead>
+<tbody><tr><td>Multi-step arithmetic</td><td>97.5%<br><span class='ci'>[87.1%, 99.6%]</span></td><td>97.5%<br><span class='ci'>[87.1%, 99.6%]</span></td><td>+0.0<br><span class='ci'>[+0.0, +0.0]</span></td><td><span class="indistinguishable">indistinguishable</span></td><td>40 / 40<br><span class='ci'>of 40</span></td><td>97.5% / 97.5%</td><td>159</td><td>1139</td><td>7.2x</td><td>+0.00</td><td>+4.8s</td><td>+0.00</td></tr><tr><td>Logical deduction</td><td>92.5%<br><span class='ci'>[80.1%, 97.4%]</span></td><td>87.5%<br><span class='ci'>[73.9%, 94.5%]</span></td><td>-5.0<br><span class='ci'>[-18.9, +8.9]</span></td><td><span class="indistinguishable">indistinguishable</span><br><span class='budget'>budget limited</span></td><td>40 / 40<br><span class='ci'>of 40</span></td><td>92.5% / 87.5%</td><td>797</td><td>3089</td><td>3.9x</td><td>-2.18</td><td>+9.8s</td><td>-0.51</td></tr><tr><td>Factual recall</td><td>97.5%<br><span class='ci'>[87.1%, 99.6%]</span></td><td>100.0%<br><span class='ci'>[91.2%, 100.0%]</span></td><td>+2.5<br><span class='ci'>[-2.4, +7.4]</span></td><td><span class="indistinguishable">indistinguishable</span></td><td>40 / 40<br><span class='ci'>of 40</span></td><td>97.5% / 100.0%</td><td>17</td><td>282</td><td>16.1x</td><td>+9.45</td><td>+1.7s</td><td>+1.45</td></tr><tr><td>Instruction following</td><td>75.0%<br><span class='ci'>[59.8%, 85.8%]</span></td><td>77.5%<br><span class='ci'>[62.5%, 87.7%]</span></td><td>+2.5<br><span class='ci'>[-10.6, +15.6]</span></td><td><span class="indistinguishable">indistinguishable</span><br><span class='budget'>budget limited</span></td><td>40 / 36<br><span class='ci'>of 40</span></td><td>75.0% / 86.1%</td><td>114</td><td>746</td><td>6.6x</td><td>+3.95</td><td>+3.4s</td><td>+0.74</td></tr><tr><td>Altered classics</td><td>95.0%<br><span class='ci'>[83.5%, 98.6%]</span></td><td>90.0%<br><span class='ci'>[76.9%, 96.0%]</span></td><td>-5.0<br><span class='ci'>[-11.8, +1.8]</span></td><td><span class="indistinguishable">indistinguishable</span></td><td>40 / 39<br><span class='ci'>of 40</span></td><td>95.0% / 92.3%</td><td>34</td><td>600</td><td>17.6x</td><td>-8.84</td><td>+3.6s</td><td>-1.39</td></tr></tbody>
+</table></div>
+
+
+<h2>Did the flag actually take effect</h2>
+<p>A <code>think</code> flag that is silently ignored produces two identical conditions and a
+null result that means nothing. The flag is therefore checked against the response rather than
+the request: a reasoning payload has to be present with it on and absent with it off.</p>
+<div class="scroll"><table>
+<thead><tr><th>Model</th><th>Traces, on</th><th>Traces, off</th><th>Trace chars, on</th>
+<th>Trace chars, off</th><th>Flag effective</th></tr></thead>
+<tbody><tr><td>qwen3:8b</td><td>200 / 200</td><td>0 / 200</td><td>733,231</td><td>0</td><td>yes</td></tr><tr><td>qwen3.5:9b</td><td>200 / 200</td><td>0 / 200</td><td>1,073,792</td><td>0</td><td>yes</td></tr></tbody>
+</table></div>
+
+<h2>The task types</h2>
+<ul><li><strong>Multi-step arithmetic</strong>. Three and four step word problems. Serial computation with an exact integer answer.</li><li><strong>Logical deduction</strong>. Five runner ordering puzzles with a unique solution, verified by brute force.</li><li><strong>Factual recall</strong>. One fact, one short answer. Nothing to compute.</li><li><strong>Instruction following</strong>. Output format constraints checked by code: word counts, key order, forbidden letters.</li><li><strong>Altered classics</strong>. Puzzles that look like famous ones but have a different answer. The literal reading is correct and the memorised answer is wrong.</li></ul>
+
+<h2>Method</h2>
+<ul>
+<li>Local models through the Ollama HTTP API, <code>think</code> passed as a top level field on
+<code>/api/chat</code>. The OpenAI compatible endpoint drops that field, which is the trap this
+experiment is built to avoid.</li>
+<li>Temperature 0.0, <code>top_k</code> 1, seed 7,
+<code>num_predict</code> 4096. Prompts are byte identical across the two
+conditions. The only difference is the flag.</li>
+<li>Grading is closed form code, never a model judging a model. Responses that produced nothing
+to grade are counted separately from responses that were graded and found wrong, so a zero in the
+accuracy column can never be an empty output in disguise.</li>
+<li>Cost is reported two ways. Generated tokens are contention free. Decode seconds come from the
+server's own <code>eval_duration</code>, which excludes model load, because the card is shared with
+other work and raw wall clock on a shared card measures the neighbours.</li>
+<li>Two exchange rates follow from that. Points per 1k extra tokens is the one to trust, since
+tokens do not move when a neighbour starts a job. Points per extra second is the number the task
+asked for, and it sits next to it with the caveat that the seconds were measured on a contended
+card.</li>
+</ul>
+
+<footer>
+<p>Source, raw cached responses and the verification suite:
+<a href="https://github.com/JesseRWeigel/thinking-traces">https://github.com/JesseRWeigel/thinking-traces</a>.
+Part of a public build catalog: <a href="https://github.com/JesseRWeigel/722-things-to-build">722 things to build</a>.</p>
+</footer>
+</main>
+</body>
+</html>

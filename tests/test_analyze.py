@@ -136,6 +136,44 @@ class TestUsability(AnalyzeCase):
         self.assertEqual(cell["on"]["correct"], 0)
         self.assertEqual(cell["on"]["accuracy"], 0.0)
 
+    def test_accuracy_among_usable_separates_the_two_failure_modes(self):
+        # Ten items. Thinking off answers all ten correctly. Thinking on answers
+        # five and gets four of them right, and produces nothing for the other five.
+        # Headline accuracy is 40 percent, accuracy among usable is 80 percent, and
+        # the difference between those two numbers is the whole point.
+        items = self.arith(10)
+        recs = []
+        for i, item in enumerate(items):
+            recs.append(record(item, False, f"Answer: {item['answer']}"))
+            if i < 5:
+                recs.append(record(item, True, "", thinking="x" * 900,
+                                   tokens=4096, done="length"))
+            elif i < 9:
+                recs.append(record(item, True, f"Answer: {item['answer']}",
+                                   thinking="x" * 90, tokens=200))
+            else:
+                recs.append(record(item, True, "Answer: 0", thinking="x" * 90, tokens=200))
+        write_raw(self.raw, recs)
+        cell = next(c for c in A.analyze()["cells"] if c["type"] == "arith")
+        self.assertAlmostEqual(cell["on"]["accuracy"], 0.4)
+        self.assertAlmostEqual(cell["on"]["accuracy_usable"], 0.8)
+        self.assertTrue(cell["budget_limited"])
+        # Over the five items answered in both conditions the difference is one loss.
+        self.assertEqual(cell["paired_usable_only"]["n"], 5)
+        self.assertAlmostEqual(cell["paired_usable_only"]["mean"], -0.2)
+
+    def test_negative_control_a_cell_with_no_truncation_is_not_budget_limited(self):
+        items = self.arith(10)
+        recs = []
+        for item in items:
+            recs.append(record(item, False, f"Answer: {item['answer']}"))
+            recs.append(record(item, True, "Answer: 0", thinking="x" * 90))
+        write_raw(self.raw, recs)
+        cell = next(c for c in A.analyze()["cells"] if c["type"] == "arith")
+        self.assertFalse(cell["budget_limited"])
+        self.assertEqual(cell["paired_usable_only"]["n"], 10)
+        self.assertAlmostEqual(cell["on"]["accuracy_usable"], cell["on"]["accuracy"])
+
     def test_negative_control_usable_and_correct_are_not_the_same_number(self):
         items = self.arith(10)
         recs = []

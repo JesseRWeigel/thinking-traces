@@ -159,7 +159,27 @@ run_sabotage ground-truth-off-by-one src/thinktrace/items.py \
 '                    "answer": str(value),||>>                    "answer": str(value + 1),' \
   summary python3 -m unittest discover -s tests
 
-# 8. Publication: the page built with the numbers blanked out.
+# 8. Accuracy among usable responses computed over all attempts instead, which
+#    erases the distinction between a wrong answer and no answer.
+run_sabotage accuracy-usable-over-all-attempts src/thinktrace/analyze.py \
+'                    "accuracy_usable": (k / usable) if usable else None,||>>                    "accuracy_usable": (k / n) if usable else None,' \
+  summary node tools/independent_check.js
+
+# 9. The answered-in-both-conditions comparison widened to include items that were
+#    never answered, which is the confound this project exists to separate out.
+run_sabotage paired-usable-includes-unanswered src/thinktrace/analyze.py \
+'            both = [i for i in shared
+                    if on_by_item[i]["usable"] and off_by_item[i]["usable"]]||>>            both = list(shared)' \
+  summary node tools/independent_check.js
+
+# 10. The budget-limited marker suppressed, so a cell whose accuracy fell because
+#     responses never arrived would read as a cell where reasoning made it worse.
+run_sabotage budget-limited-suppressed src/thinktrace/analyze.py \
+'                "budget_limited": (on_trunc / by_cond["on"]["n"] >= 0.10
+                                   and on_trunc > off_trunc),||>>                "budget_limited": False,' \
+  summary node tools/independent_check.js
+
+# 11. Publication: the page built with the numbers blanked out.
 run_sabotage page-numbers-blanked src/thinktrace/site.py \
 'def pct(x: float) -> str:
     return f"{x * 100:.1f}%"||>>def pct(x: float) -> str:

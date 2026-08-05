@@ -337,6 +337,12 @@ function main() {
       eq(`${tag} ${cond} usable`, sel.filter((g) => g.usable).length, cell[cond].usable);
       eq(`${tag} ${cond} truncated`, sel.filter((g) => g.truncated).length, cell[cond].truncated);
       closeRel(`${tag} ${cond} accuracy`, k / n, cell[cond].accuracy, 1.0);
+      const usable = sel.filter((g) => g.usable).length;
+      if (usable > 0) {
+        closeRel(`${tag} ${cond} accuracy_usable`, k / usable, cell[cond].accuracy_usable, 1.0);
+      } else {
+        eq(`${tag} ${cond} accuracy_usable`, null, cell[cond].accuracy_usable);
+      }
       closeRel(`${tag} ${cond} acc_lo`, lo, cell[cond].acc_lo, 1.0);
       closeRel(`${tag} ${cond} acc_hi`, hi, cell[cond].acc_hi, 1.0);
       const tokTotal = sel.reduce((a, g) => a + g.genTokens, 0);
@@ -368,6 +374,24 @@ function main() {
 
     const expectedVerdict = !pd.significant ? 'indistinguishable' : (pd.mean > 0 ? 'helps' : 'hurts');
     eq(`${tag} verdict`, expectedVerdict, cell.verdict);
+
+    // Paired comparison over items answered in both conditions, recomputed here.
+    const both = shared.filter((id) => onById.get(id).usable && offById.get(id).usable);
+    const diffsBoth = both.map(
+      (id) => Number(onById.get(id).correct) - Number(offById.get(id).correct),
+    );
+    const pdBoth = pairedDiff(diffsBoth);
+    eq(`${tag} paired_usable_only n`, pdBoth.n, cell.paired_usable_only.n);
+    closeRel(`${tag} paired_usable_only mean`, pdBoth.mean, cell.paired_usable_only.mean, 1.0);
+    closeRel(`${tag} paired_usable_only lo`, pdBoth.lo, cell.paired_usable_only.lo, 1.0);
+    closeRel(`${tag} paired_usable_only hi`, pdBoth.hi, cell.paired_usable_only.hi, 1.0);
+    eq(`${tag} paired_usable_only significant`, pdBoth.significant,
+      cell.paired_usable_only.significant);
+
+    const onTrunc = byCond.on.filter((g) => g.truncated).length;
+    const offTrunc = byCond.off.filter((g) => g.truncated).length;
+    eq(`${tag} budget_limited`,
+      onTrunc / byCond.on.length >= 0.10 && onTrunc > offTrunc, cell.budget_limited);
 
     const onTok = meanOf(byCond.on.map((g) => g.genTokens));
     const offTok = meanOf(byCond.off.map((g) => g.genTokens));

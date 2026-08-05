@@ -64,6 +64,7 @@ tbody tr:last-child td { border-bottom:none; }
 .helps { color: var(--good); font-weight:600; }
 .hurts { color: var(--bad); font-weight:600; }
 .indistinguishable { color: var(--flat); }
+.budget { color: var(--bad); font-size:.78em; text-transform:uppercase; letter-spacing:.03em; }
 .card { background:var(--card); border:1px solid var(--line); border-radius:10px;
         padding:.9rem 1.1rem; margin:1rem 0; }
 .grid { display:grid; gap:.8rem; grid-template-columns:repeat(auto-fit,minmax(14rem,1fr)); }
@@ -81,6 +82,11 @@ def pct(x: float) -> str:
 
 def signed(x: float) -> str:
     return f"{x * 100:+.1f}"
+
+
+def usable_acc(cond: dict) -> str:
+    v = cond["accuracy_usable"]
+    return "n/a" if v is None else f"{v * 100:.1f}%"
 
 
 def verdict_html(cell: dict) -> str:
@@ -116,9 +122,13 @@ def build(summary: dict) -> str:
                 f"[{pct(c['on']['acc_lo'])}, {pct(c['on']['acc_hi'])}]</span></td>"
                 f"<td>{signed(p['mean'])}<br><span class='ci'>"
                 f"[{signed(p['lo'])}, {signed(p['hi'])}]</span></td>"
-                f"<td>{verdict_html(c)}</td>"
+                f"<td>{verdict_html(c)}"
+                + ("<br><span class='budget'>budget limited</span>"
+                   if c["budget_limited"] else "")
+                + "</td>"
                 f"<td>{c['off']['usable']} / {c['on']['usable']}"
                 f"<br><span class='ci'>of {c['off']['n']}</span></td>"
+                f"<td>{usable_acc(c['off'])} / {usable_acc(c['on'])}</td>"
                 f"<td>{c['off']['gen_tokens_mean']:.0f}</td>"
                 f"<td>{c['on']['gen_tokens_mean']:.0f}</td>"
                 f"<td>{c['token_ratio']:.1f}x</td>"
@@ -147,7 +157,8 @@ def build(summary: dict) -> str:
 <div class="scroll"><table>
 <thead><tr>
   <th>Task type</th><th>Acc, off</th><th>Acc, on</th><th>Paired diff (pts)</th><th>Verdict</th>
-  <th>Usable off / on</th><th>Tok off</th><th>Tok on</th><th>Token cost</th>
+  <th>Usable off / on</th><th>Acc among usable, off / on</th>
+  <th>Tok off</th><th>Tok on</th><th>Token cost</th>
   <th>Pts / 1k extra tok</th><th>Extra decode</th><th>Pts / extra s</th>
 </tr></thead>
 <tbody>{''.join(body)}</tbody>
@@ -175,12 +186,22 @@ def build(summary: dict) -> str:
         " difference this sample size cannot distinguish from zero."
         if overhead else ""
     )
+    budget_hurts = [c for c in hurts if c["budget_limited"]]
+    answered_sig = [c for c in summary["cells"] if c["paired_usable_only"]["significant"]]
+    total_extra = sum(c["on"]["gen_tokens_total"] - c["off"]["gen_tokens_total"]
+                      for c in summary["cells"])
     headline = f"""
 <div class="card">
 <p><strong>Where the traces paid for themselves:</strong> {name_list(helps)}.</p>
 <p><strong>Where they cost at least twice the tokens and returned nothing measurable:</strong>
 {name_list(overhead)}.{waste_line}</p>
-<p><strong>Where they measurably hurt:</strong> {name_list(hurts)}.</p>
+<p><strong>Where they measurably hurt:</strong> {name_list(hurts)}.
+{f'Of those, {len(budget_hurts)} of {len(hurts)} are budget limited, so the drop is mostly'
+  ' responses that never arrived.' if budget_hurts else ''}</p>
+<p><strong>Restricted to items answered in both conditions:</strong>
+{name_list(answered_sig) if answered_sig else 'no cell shows a difference this sample size can '
+ 'distinguish from zero'}. Across all {len(summary['cells'])} cells the traces cost
+{total_extra:,} extra generated tokens.</p>
 </div>
 """
 
@@ -225,6 +246,13 @@ zero the row reads <span class="indistinguishable">indistinguishable</span>, whi
 statement about this sample size and not a claim that the effect is exactly zero. A row that
 reads indistinguishable while the token cost column reads several times over is the finding
 that matters: the traces were paid for and returned nothing measurable.</p>
+<p><strong>Two ways to lose.</strong> A cell can score low because the model answered and was
+wrong, or because it spent its whole token budget reasoning and never answered. Those are
+different problems with opposite fixes, so both are on the table. A row marked
+<span class="budget">budget limited</span> ran out of tokens on at least a tenth of its items with
+thinking on, more often than with thinking off, and its accuracy drop is mostly missing output
+rather than bad reasoning. The accuracy among usable responses is the column to read for those
+rows.</p>
 </div>
 {headline}
 {''.join(rows)}
