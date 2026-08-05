@@ -138,8 +138,77 @@ bash scripts/verify.sh
 
 ## Findings
 
-See `results/summary.json` and the results page. The headline is the `verdict` column: which cells
-are `helps`, which are `indistinguishable` at this sample size, and what each one cost.
+**Thinking traces did not measurably improve accuracy in any of the ten cells, and cost 3.3 to
+162 times the generated tokens.** Every apparent drop traces to the model spending its token
+budget in the reasoning channel and returning nothing to grade, not to reasoning its way to a
+worse answer.
+
+| Model | Task type | Acc off | Acc on | Paired diff, 95% CI | Verdict | Usable off/on | Acc among usable, off/on | Tok off | Tok on | Token cost | Extra decode |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| `qwen3.5:9b` | arith | 90.0% | 70.0% | -20.0 [-32.6, -7.4] | hurts, budget limited | 40/33 | 90.0% / 84.8% | 262 | 2083 | 8.0x | +15.4s |
+| `qwen3.5:9b` | deduct | 100.0% | 15.0% | -85.0 [-96.2, -73.8] | hurts, budget limited | 40/7 | 100.0% / 85.7% | 1196 | 3927 | 3.3x | +22.7s |
+| `qwen3.5:9b` | recall | 100.0% | 100.0% | +0.0 [+0.0, +0.0] | indistinguishable | 40/40 | 100.0% / 100.0% | 59 | 516 | 8.8x | +3.8s |
+| `qwen3.5:9b` | instruct | 80.0% | 67.5% | -12.5 [-25.0, +0.0] | indistinguishable, budget limited | 40/27 | 80.0% / 100.0% | 10 | 1574 | 161.8x | +13.4s |
+| `qwen3.5:9b` | overthink | 97.5% | 87.5% | -10.0 [-19.4, -0.6] | hurts, budget limited | 40/35 | 97.5% / 100.0% | 101 | 1288 | 12.7x | +10.1s |
+| `qwen3:8b` | arith | 97.5% | 97.5% | +0.0 [+0.0, +0.0] | indistinguishable | 40/40 | 97.5% / 97.5% | 159 | 1139 | 7.2x | +4.8s |
+| `qwen3:8b` | deduct | 92.5% | 87.5% | -5.0 [-18.9, +8.9] | indistinguishable, budget limited | 40/40 | 92.5% / 87.5% | 797 | 3089 | 3.9x | +9.8s |
+| `qwen3:8b` | recall | 97.5% | 100.0% | +2.5 [-2.4, +7.4] | indistinguishable | 40/40 | 97.5% / 100.0% | 17 | 282 | 16.1x | +1.7s |
+| `qwen3:8b` | instruct | 75.0% | 77.5% | +2.5 [-10.6, +15.6] | indistinguishable, budget limited | 40/36 | 75.0% / 86.1% | 114 | 746 | 6.6x | +3.4s |
+| `qwen3:8b` | overthink | 95.0% | 90.0% | -5.0 [-11.8, +1.8] | indistinguishable | 40/39 | 95.0% / 92.3% | 34 | 600 | 17.6x | +3.6s |
+
+Totals, 200 items per condition per model:
+
+| Model | Condition | Correct | Usable | Generated tokens | Decode seconds | Truncated |
+|---|---|---|---|---|---|---|
+| `qwen3:8b` | off | 183/200 | 200 | 44,872 | 656 | 2 |
+| `qwen3:8b` | on | 181/200 | 195 | 234,264 | 1,590 | 11 |
+| `qwen3.5:9b` | off | 187/200 | 200 | 65,071 | 510 | 0 |
+| `qwen3.5:9b` | on | 136/200 | 142 | 375,488 | 3,124 | 60 |
+
+### Restricted to items answered in both conditions
+
+This is the cut that separates "reasoned itself wrong" from "ran out of budget". Over items where
+both conditions produced something to grade, **no cell shows a difference this sample size can
+distinguish from zero**, in either direction.
+
+| Model | Task type | n | Paired diff, 95% CI |
+|---|---|---|---|
+| `qwen3.5:9b` | arith | 33 | -6.1 [-14.3, +2.2] |
+| `qwen3.5:9b` | deduct | 7 | -14.3 [-42.3, +13.7] |
+| `qwen3.5:9b` | recall | 40 | +0.0 [+0.0, +0.0] |
+| `qwen3.5:9b` | instruct | 27 | +3.7 [-3.6, +11.0] |
+| `qwen3.5:9b` | overthink | 35 | +0.0 [+0.0, +0.0] |
+| `qwen3:8b` | arith | 40 | +0.0 [+0.0, +0.0] |
+| `qwen3:8b` | deduct | 40 | -5.0 [-18.9, +8.9] |
+| `qwen3:8b` | recall | 40 | +2.5 [-2.4, +7.4] |
+| `qwen3:8b` | instruct | 36 | +5.6 [-7.8, +19.0] |
+| `qwen3:8b` | overthink | 39 | -2.6 [-7.6, +2.5] |
+
+### Four things worth taking away
+
+**`think: false` does not stop the model reasoning.** It removes the separate reasoning channel.
+With thinking off, `qwen3:8b` still spent a mean of 797 tokens per deduction item and `qwen3.5:9b`
+spent 1,196, reasoning in the ordinary content channel. Treating think-off as a cheap baseline
+without measuring its token count is a mistake. The place where the flag really is cheap is
+instruction following on `qwen3.5:9b`: 10 tokens off against 1,574 on, a 162 fold difference for a
+task where the answer is a formatted string and there is nothing to work out.
+
+**The token budget is the binding constraint, and it binds asymmetrically.** At `num_predict`
+4096, thinking on truncated 60 of 200 responses on `qwen3.5:9b` against 0 with it off. On
+deduction it truncated 34 of 40. A harness that books a truncated response as an incorrect answer
+would report that cell as 15 percent accurate and conclude that reasoning destroyed the model's
+deduction. It answered 7 items and got 6 right.
+
+**A high baseline leaves nothing to win.** Both models sit between 75 and 100 percent with
+thinking off on every task type. The ceiling, not the reasoning, is doing most of the work here.
+This is a real limit on the experiment and is stated in Unfinished below.
+
+**The task type that was supposed to show reasoning hurting did not show it.** The `overthink`
+set was built so traces could talk a model out of a correct literal answer. Both models scored
+above 87 percent on it in both conditions, and the paired difference over answered items is +0.0
+and -2.6 points. The hypothesis that reasoning entrenches the memorised look-alike answer is not
+supported at this sample size, and that refutation is encoded as a passing test rather than left
+as a story about what should have happened.
 
 ## Status
 
