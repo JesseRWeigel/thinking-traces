@@ -68,8 +68,11 @@ therefore cannot be an empty output in disguise, and the usable count sits next 
 - **Intervals.** 95 percent Wilson for a single accuracy. For the difference between conditions the
   two conditions see identical items, so the reported interval is on the mean of the per-item
   differences. When that interval contains zero the row reads `indistinguishable`, which is a claim
-  about this sample size and not a claim that the effect is zero. At 40 items per cell an effect
-  below roughly 10 to 15 points is not detectable, and the page says so.
+  about this sample size and not a claim that the effect is zero. The measured half widths at 40
+  items per cell run from 4.9 to 13.9 points across the eight cells where the two conditions
+  disagreed on anything at all, so that is the range of effect this design could have detected. Two
+  cells have a half width of exactly zero because the two conditions agreed on every single item,
+  which is a stronger statement than a narrow interval rather than a degenerate one.
 - **Cost, two ways.** Generated tokens, which are unaffected by what else is running. And decode
   seconds from the server's own `eval_duration`, which excludes model load time. Raw wall clock is
   recorded and reported too, with the caveat that it partly measures the neighbours on a shared
@@ -248,7 +251,7 @@ as a story about what should have happened.
 
 ## Status
 
-**`bash scripts/verify.sh` exits 1.** Six checks fail, and every one of them traces to a single
+**`bash scripts/verify.sh` exits 1.** Four checks fail, and every one of them traces to a single
 missing piece: the replicate run that measures the self-disagreement floor. It is waiting on
 exclusive GPU time behind another builder's throughput measurement, which contention makes wrong
 rather than merely slow. The failures are the gate working as designed, not a defect discovered
@@ -264,7 +267,7 @@ after the fact. Pasted from a real run:
     checked 800 responses against the current item set
     models: qwen3.5:9b, qwen3:8b, both conditions, 200 items each
 [4] unit suite
-    ok: 110 tests passed
+    ok: 111 tests passed
 [5] item set is reproducible from its generator
     ok: data/items.json matches a fresh generation (200 items)
 [6] summary is reproducible from the cached responses
@@ -277,9 +280,10 @@ after the fact. Pasted from a real run:
     FAIL: noise floor not measured, so no effect size can be interpreted
 [9] independent recomputation (node, shares no code with the analysis)
     FAIL: independent check exited 1
-        MISMATCH no replicate run under data/replicate, so no effect size can be interpreted
       independent check: 800 cached responses, 200 items
+        MISMATCH no replicate run under data/replicate, so no effect size can be interpreted
       independent check: 459 comparisons, 1 mismatches
+      independent check FAILED
 [10] published page carries the measured numbers
     ok: docs/index.html matches a fresh build
     page check: 115 assertions, 0 problems
@@ -287,16 +291,16 @@ after the fact. Pasted from a real run:
     scanned 28 files as raw bytes
 [12] README reflects this run
     FAIL: README Status has no line that is exactly the success line
-    FAIL: README quotes a different test count than the 110 that just ran
-    FAIL: README still contains TODO
 [13] sabotage suite
+    FAIL: sabotage suite exited 1
       --- SABOTAGE noise-floor-uses-point-estimate
         (a) patch applied: src/thinktrace/analyze.py differs from the original
         (b) FAILED: the artefact is unchanged, so this attack proves nothing about the checks
-      11 proven attacks caught, 1 failed
-    FAIL: sabotage suite exited 1
-
-6 check(s) failed
+      --- SABOTAGE page-numbers-blanked
+        (a) patch applied: src/thinktrace/site.py differs from the original
+        (b) measured output changed: 12 differing page lines
+        11 proven attacks caught, 1 failed
+4 check(s) failed
 VERIFY OK: thinking-traces -- NOT REACHED
 ```
 
@@ -306,10 +310,12 @@ Reading the failures:
   `noise_floor: {"measured": false, "reason": "no replicate run present"}` and every cell carries
   `clears_noise_floor: null`. Both the verify step and the independent Node checker refuse to pass
   on that, because a skipped check reports the same success as one that ran.
-- **[12]** is this section and the two `TODO` markers in Unfinished. Both go once the run completes
-  and the numbers below are regenerated. The success-line check is a whole-line match on purpose: a
-  substring match would have been satisfied by the `-- NOT REACHED` line pasted right above, so a
-  failing run could have documented itself as a passing one.
+- **[12]** is this section: there is no line that is exactly the success line, because the run did
+  not reach it. Two of that step's checks are whole-string matches for a reason. The success line is
+  matched whole-line, because a substring match would be satisfied by the `-- NOT REACHED` line
+  pasted right above, letting a failing run document itself as a passing one. The placeholder check
+  matches the scaffold's `TODO` followed by a colon rather than the bare word, because the bare word
+  appears in this very section whenever the check fails, which made it permanently unpassable.
 - **[13]** is the honest outcome for the twelfth attack rather than a weakness in it. That sabotage
   makes the floor read its point estimate instead of the interval's upper bound. With no replicate
   data the function returns early, so the patch changes the file and changes nothing downstream. The

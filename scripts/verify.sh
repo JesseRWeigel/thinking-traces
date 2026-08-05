@@ -257,7 +257,12 @@ else
   # moment someone adds a test, and this is what makes that a failure.
   grep -qF "$UNIT_COUNT tests passed" "$README" \
     || { bad "README quotes a different test count than the $UNIT_COUNT that just ran"; README_BAD=1; }
-  if grep -q 'TODO' "$README"; then bad "README still contains TODO"; README_BAD=1; fi
+  # Matches the scaffold's placeholder form, which always carries a colon, rather
+  # than the bare word. Grepping for the bare word made this check unpassable: its
+  # own failure line gets pasted into the Status section below, so the README then
+  # contained the word forever and the check reported a placeholder that was really
+  # a quotation of itself.
+  if grep -q 'TODO:' "$README"; then bad "README still contains a placeholder"; README_BAD=1; fi
   [ "$README_BAD" -eq 0 ] && ok "Status section present, success line and test count match"
 fi
 

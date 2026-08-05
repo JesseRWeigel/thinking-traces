@@ -144,6 +144,19 @@ class TestFindings(unittest.TestCase):
             self.assertGreaterEqual(c["off"]["accuracy"], 0.70,
                                     f"{c['model']}/{c['type']} baseline")
 
+    def test_detectable_effect_range_is_the_one_quoted(self):
+        widths = [c["paired"]["half_width"] * 100 for c in self.cells]
+        nonzero = [w for w in widths if w > 0]
+        self.assertAlmostEqual(min(nonzero), 4.9, places=1)
+        self.assertAlmostEqual(max(widths), 13.9, places=1)
+        # Two cells agree on every item, which is why their half width is zero.
+        zero = [c for c in self.cells if c["paired"]["half_width"] == 0]
+        self.assertEqual(len(zero), 2)
+        for c in zero:
+            self.assertEqual(c["flips"]["on_only"], 0)
+            self.assertEqual(c["flips"]["off_only"], 0)
+            self.assertEqual(c["flips"]["agree"], c["paired"]["n"])
+
     def test_settings_are_the_ones_the_readme_documents(self):
         meta = self.summary["meta"]
         self.assertEqual(meta["temperature"], 0.0)
