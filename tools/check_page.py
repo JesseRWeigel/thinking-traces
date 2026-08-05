@@ -44,6 +44,9 @@ def main() -> int:
         want(f"{cell['paired']['mean'] * 100:+.1f}", f"{tag} paired mean")
         want(f"[{cell['paired']['lo'] * 100:+.1f}, {cell['paired']['hi'] * 100:+.1f}]",
              f"{tag} paired interval")
+        pu = cell["paired_usable_only"]
+        want(f"[{pu['lo'] * 100:+.1f}, {pu['hi'] * 100:+.1f}] n={pu['n']}",
+             f"{tag} answered-only interval")
         want(f"{cell['token_ratio']:.1f}x", f"{tag} token ratio")
         want(cell["verdict"], f"{tag} verdict")
         # Usable counts have to be on the page, or a zero accuracy cell is

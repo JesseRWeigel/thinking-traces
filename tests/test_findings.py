@@ -101,6 +101,21 @@ class TestFindings(unittest.TestCase):
         self.assertGreater(c["on"]["accuracy_usable"], 0.8)
         self.assertLessEqual(c["on"]["usable"], 10)
 
+    def test_the_weak_row_is_named_as_weak(self):
+        # README calls out that one answered-only row is uninformative rather than
+        # reassuring. If its sample ever grows, the caveat has to be rewritten.
+        weak = self.cell("qwen3.5:9b", "deduct")["paired_usable_only"]
+        self.assertLessEqual(weak["n"], 10)
+        self.assertGreater(weak["hi"] - weak["lo"], 0.4, "README calls this interval very wide")
+
+    def test_negative_control_the_other_rows_are_not_that_weak(self):
+        others = [c for c in self.cells
+                  if not (c["model"] == "qwen3.5:9b" and c["type"] == "deduct")]
+        for c in others:
+            pu = c["paired_usable_only"]
+            self.assertGreaterEqual(pu["n"], 27, f"{c['model']}/{c['type']}")
+            self.assertLess(pu["hi"] - pu["lo"], 0.4, f"{c['model']}/{c['type']}")
+
     # ------------------------------------------- the refuted overthink hypothesis
 
     def test_reasoning_does_not_talk_either_model_out_of_the_literal_answer(self):

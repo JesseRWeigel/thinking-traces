@@ -252,7 +252,10 @@ else
   # so a failing run could document itself as a passing one.
   grep -qxF "$SUCCESS_LINE" "$README" \
     || { bad "README Status has no line that is exactly the success line"; README_BAD=1; }
-  grep -qF "Ran $UNIT_COUNT tests" "$README" \
+  # Matches the exact phrasing this script prints, so the count in the README can
+  # only be right if it was pasted from a real run. A pasted count goes stale the
+  # moment someone adds a test, and this is what makes that a failure.
+  grep -qF "$UNIT_COUNT tests passed" "$README" \
     || { bad "README quotes a different test count than the $UNIT_COUNT that just ran"; README_BAD=1; }
   if grep -q 'TODO' "$README"; then bad "README still contains TODO"; README_BAD=1; fi
   [ "$README_BAD" -eq 0 ] && ok "Status section present, success line and test count match"

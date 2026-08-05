@@ -108,6 +108,7 @@ def build(summary: dict) -> str:
         body = []
         for c in cells:
             p = c["paired"]
+            pu = c["paired_usable_only"]
             extra = c["extra_s_per_item"]
             per_s = c["acc_points_per_extra_second"]
             per_s_txt = "n/a" if per_s is None else f"{per_s:+.2f}"
@@ -122,6 +123,8 @@ def build(summary: dict) -> str:
                 f"[{pct(c['on']['acc_lo'])}, {pct(c['on']['acc_hi'])}]</span></td>"
                 f"<td>{signed(p['mean'])}<br><span class='ci'>"
                 f"[{signed(p['lo'])}, {signed(p['hi'])}]</span></td>"
+                f"<td>{signed(pu['mean'])}<br><span class='ci'>"
+                f"[{signed(pu['lo'])}, {signed(pu['hi'])}] n={pu['n']}</span></td>"
                 f"<td>{verdict_html(c)}"
                 + ("<br><span class='budget'>budget limited</span>"
                    if c["budget_limited"] else "")
@@ -156,7 +159,8 @@ def build(summary: dict) -> str:
 </div>
 <div class="scroll"><table>
 <thead><tr>
-  <th>Task type</th><th>Acc, off</th><th>Acc, on</th><th>Paired diff (pts)</th><th>Verdict</th>
+  <th>Task type</th><th>Acc, off</th><th>Acc, on</th><th>Paired diff (pts)</th>
+  <th>Paired diff, answered only</th><th>Verdict</th>
   <th>Usable off / on</th><th>Acc among usable, off / on</th>
   <th>Tok off</th><th>Tok on</th><th>Token cost</th>
   <th>Pts / 1k extra tok</th><th>Extra decode</th><th>Pts / extra s</th>

@@ -214,6 +214,12 @@ distinguish from zero**, in either direction.
 | `qwen3:8b` | instruct | 36 | +5.6 [-7.8, +19.0] |
 | `qwen3:8b` | overthink | 39 | -2.6 [-7.6, +2.5] |
 
+One row there is weak rather than reassuring, and it is worth saying so plainly. `qwen3.5:9b` on
+deduction has n=7, because 33 of its 40 think-on responses were truncated. Its interval, -14.3
+[-42.3, +13.7], is wide enough to contain almost anything, so that cell is uninformative about
+reasoning quality rather than evidence for the null. The nine cells with n between 27 and 40 carry
+the claim. The deduction cell carries only the truncation finding.
+
 ### Four things worth taking away
 
 **`think: false` does not stop the model reasoning.** It removes the separate reasoning channel.
@@ -258,7 +264,7 @@ after the fact. Pasted from a real run:
     checked 800 responses against the current item set
     models: qwen3.5:9b, qwen3:8b, both conditions, 200 items each
 [4] unit suite
-    ok: 108 tests passed
+    ok: 110 tests passed
 [5] item set is reproducible from its generator
     ok: data/items.json matches a fresh generation (200 items)
 [6] summary is reproducible from the cached responses
@@ -276,12 +282,12 @@ after the fact. Pasted from a real run:
       independent check: 459 comparisons, 1 mismatches
 [10] published page carries the measured numbers
     ok: docs/index.html matches a fresh build
-    page check: 105 assertions, 0 problems
+    page check: 115 assertions, 0 problems
 [11] no private paths, no credential-shaped strings, no binary blind spots
     scanned 28 files as raw bytes
 [12] README reflects this run
     FAIL: README Status has no line that is exactly the success line
-    FAIL: README quotes a different test count than the 108 that just ran
+    FAIL: README quotes a different test count than the 110 that just ran
     FAIL: README still contains TODO
 [13] sabotage suite
       --- SABOTAGE noise-floor-uses-point-estimate
