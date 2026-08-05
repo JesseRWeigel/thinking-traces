@@ -126,10 +126,11 @@ bash scripts/verify.sh
 7. A hygiene scan that reads every file as raw bytes rather than as text, because one NUL byte
    makes git and grep treat a file as binary and skip it silently.
 8. A README check: this file has to carry the success line and the real test count.
-9. **A sabotage suite.** Eight attacks, each on a copy of the tree, each proving three things in
-   order: the patch applied, it changed the measured output, and a check caught it. An attack that
-   fails either of the first two is reported as a no-op and fails the suite rather than being
-   credited to the detector.
+9. The self-disagreement floor is enforced, and fails while unmeasured rather than passing quietly.
+10. **A sabotage suite.** Twelve attacks, each on a copy of the tree, each proving three things in
+    order: the patch applied, it changed the measured output, and a check caught it. An attack that
+    fails either of the first two is reported as a no-op and fails the suite rather than being
+    credited to the detector.
 
 | Sabotage | Broken | Caught by |
 |---|---|---|
@@ -140,7 +141,30 @@ bash scripts/verify.sh
 | `token-cost-undercount` | token aggregation | independent Node recomputation |
 | `flag-evidence-wrong-field` | think flag evidence | independent Node recomputation |
 | `ground-truth-off-by-one` | item ground truth | unit suite |
+| `accuracy-usable-over-all-attempts` | no-answer versus wrong-answer | independent Node recomputation |
+| `paired-usable-includes-unanswered` | the answered-only comparison | independent Node recomputation |
+| `budget-limited-suppressed` | the truncation marker | independent Node recomputation |
+| `noise-floor-uses-point-estimate` | the effect-size floor | independent Node recomputation |
 | `page-numbers-blanked` | publication | page content check |
+
+The detectors are run against the sabotaged artefact, not the committed one. That distinction is
+load bearing: an earlier version of this harness pointed the Node checker at the pristine
+`summary.json`, so it recomputed correct numbers, compared them to correct numbers, and passed while
+four of the attacks sat undetected.
+
+### Checked in a real browser, separately
+
+Not in `verify.sh`, because it needs a browser and the network. Run against the deployed page at a
+390 by 844 viewport, asserting page identity inside the evaluation because the browser is shared
+with other agents on this workstation:
+
+```
+clientWidth 375, documentElement.scrollWidth 375, sideways body scroll: no
+elements whose right edge escapes the page: 0
+body overflow-x: visible   (not hidden, which would mask real overflow)
+three wide tables scroll inside their own containers: 1797/341, 1789/341, 758/341
+742 digits of results, 11 verdict labels, 7 budget-limited markers rendered
+```
 
 ## Findings
 
@@ -218,7 +242,88 @@ as a story about what should have happened.
 
 ## Status
 
-TODO: pasted verify output goes here once the measurement run completes.
+**`bash scripts/verify.sh` exits 1.** Six checks fail, and every one of them traces to a single
+missing piece: the replicate run that measures the self-disagreement floor. It is waiting on
+exclusive GPU time behind another builder's throughput measurement, which contention makes wrong
+rather than merely slow. The failures are the gate working as designed, not a defect discovered
+after the fact. Pasted from a real run:
+
+```
+[1] prerequisites
+    ok: python3 Python 3.12.3
+    ok: node v24.13.0
+[2] cached responses are present
+    ok: 800 cached raw responses across 4 condition files
+[3] every cached response still belongs to its prompt
+    checked 800 responses against the current item set
+    models: qwen3.5:9b, qwen3:8b, both conditions, 200 items each
+[4] unit suite
+    ok: 108 tests passed
+[5] item set is reproducible from its generator
+    ok: data/items.json matches a fresh generation (200 items)
+[6] summary is reproducible from the cached responses
+    ok: results/summary.json matches a fresh analysis of data/raw
+[7] the think flag demonstrably took effect
+    qwen3:8b: reasoning payload present on 100% of think-on responses, 0% of think-off responses
+    qwen3.5:9b: reasoning payload present on 100% of think-on responses, 0% of think-off responses
+[8] self-disagreement floor has been measured
+    COULD NOT CHECK: no replicate run present under data/replicate
+    FAIL: noise floor not measured, so no effect size can be interpreted
+[9] independent recomputation (node, shares no code with the analysis)
+    FAIL: independent check exited 1
+        MISMATCH no replicate run under data/replicate, so no effect size can be interpreted
+      independent check: 800 cached responses, 200 items
+      independent check: 459 comparisons, 1 mismatches
+[10] published page carries the measured numbers
+    ok: docs/index.html matches a fresh build
+    page check: 105 assertions, 0 problems
+[11] no private paths, no credential-shaped strings, no binary blind spots
+    scanned 28 files as raw bytes
+[12] README reflects this run
+    FAIL: README Status has no line that is exactly the success line
+    FAIL: README quotes a different test count than the 108 that just ran
+    FAIL: README still contains TODO
+[13] sabotage suite
+      --- SABOTAGE noise-floor-uses-point-estimate
+        (a) patch applied: src/thinktrace/analyze.py differs from the original
+        (b) FAILED: the artefact is unchanged, so this attack proves nothing about the checks
+      11 proven attacks caught, 1 failed
+    FAIL: sabotage suite exited 1
+
+6 check(s) failed
+VERIFY OK: thinking-traces -- NOT REACHED
+```
+
+Reading the failures:
+
+- **[8] and [9]** are the floor gate. `analyze` writes
+  `noise_floor: {"measured": false, "reason": "no replicate run present"}` and every cell carries
+  `clears_noise_floor: null`. Both the verify step and the independent Node checker refuse to pass
+  on that, because a skipped check reports the same success as one that ran.
+- **[12]** is this section and the two `TODO` markers in Unfinished. Both go once the run completes
+  and the numbers below are regenerated. The success-line check is a whole-line match on purpose: a
+  substring match would have been satisfied by the `-- NOT REACHED` line pasted right above, so a
+  failing run could have documented itself as a passing one.
+- **[13]** is the honest outcome for the twelfth attack rather than a weakness in it. That sabotage
+  makes the floor read its point estimate instead of the interval's upper bound. With no replicate
+  data the function returns early, so the patch changes the file and changes nothing downstream. The
+  harness reported it as a no-op and failed the suite rather than crediting the detector, which is
+  exactly what it is built to do. Eleven of twelve attacks are proven caught; the twelfth is
+  unproven and is reported as unproven.
+
+The other twelve steps pass from a fresh clone taken outside the source tree, which is where a
+hardcoded sibling path or a stale committed artefact would show up:
+
+```
+git clone . /tmp/x && cd /tmp/x && bash scripts/verify.sh
+```
+
+### What passing will look like
+
+Once the card frees, `--tag rep2 --per-type 8` on both models fills `data/replicate/`, and steps 8,
+9 and 13 have their inputs. Nothing else changes. If the floor turns out to be large enough to
+swallow the differences reported in Findings, the `clears_noise_floor` column will say so and the
+prose above it will be rewritten to match rather than left standing.
 
 ## Unfinished
 

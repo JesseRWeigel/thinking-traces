@@ -247,8 +247,11 @@ if [ ! -f "$README" ]; then
   bad "no README.md"; README_BAD=1
 else
   grep -q '^## Status' "$README" || { bad "README has no Status section"; README_BAD=1; }
-  grep -qF "$SUCCESS_LINE" "$README" \
-    || { bad "README Status does not contain the success line"; README_BAD=1; }
+  # Whole line match. A substring match would be satisfied by a pasted
+  # "VERIFY OK: thinking-traces -- NOT REACHED", which is the failure line,
+  # so a failing run could document itself as a passing one.
+  grep -qxF "$SUCCESS_LINE" "$README" \
+    || { bad "README Status has no line that is exactly the success line"; README_BAD=1; }
   grep -qF "Ran $UNIT_COUNT tests" "$README" \
     || { bad "README quotes a different test count than the $UNIT_COUNT that just ran"; README_BAD=1; }
   if grep -q 'TODO' "$README"; then bad "README still contains TODO"; README_BAD=1; fi
