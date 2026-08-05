@@ -91,6 +91,16 @@ import json,sys; print(json.dumps(json.load(open(sys.argv[1])),indent=1,sort_key
     FAIL=$((FAIL + 1)); return
   fi
 
+  # Publish the sabotaged artefact over the committed one. This is the threat
+  # being modelled: someone commits the broken code together with the numbers it
+  # produced. Pointing a checker at the pristine artefact instead lets four of
+  # these eight attacks through, which is how this step came to exist.
+  if [ "$artifact" = "summary" ]; then
+    cp "$dir/sabotaged.json" "$dir/results/summary.json"
+  else
+    cp "$dir/sabotaged.html" "$dir/docs/index.html"
+  fi
+
   # (c) prove a check catches it
   ( cd "$dir" && PYTHONPATH=src "${detector[@]}" ) >"$WORK/$name.log" 2>&1
   local rc=$?
@@ -154,7 +164,7 @@ run_sabotage page-numbers-blanked src/thinktrace/site.py \
 'def pct(x: float) -> str:
     return f"{x * 100:.1f}%"||>>def pct(x: float) -> str:
     return "n/a"' \
-  page python3 tools/check_page.py sabotaged.html
+  page python3 tools/check_page.py
 
 banner "sabotage summary"
 echo "  $PASS proven attacks caught, $FAIL failed"

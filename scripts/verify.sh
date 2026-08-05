@@ -140,9 +140,13 @@ skip_dirs = {".git", "node_modules", "__pycache__"}
 # The scan reads bytes, not text. One NUL byte makes git and grep classify a file
 # as binary and skip it silently, which is how a real token got committed here
 # once and reported clean.
+# Each pattern is assembled from fragments so the literal string it hunts for
+# never appears in this file. A scanner that trips on its own source teaches
+# people to ignore it, and the first thing they ignore is a real hit.
 patterns = {
-    "home path": re.compile(rb"/home/[a-z]"),
-    "tilde project path": re.compile(rb"~/Projects"),
+    "home path": re.compile(b"/" + b"home/[a-z]"),
+    "tilde project path": re.compile(b"~/" + b"Projects"),
+    "private workspace name": re.compile(b"thou" + b"sand", re.IGNORECASE),
     "github token": re.compile(rb"gh[pousr]_[A-Za-z0-9]{16,}"),
     "openai key": re.compile(rb"sk-[A-Za-z0-9]{20,}"),
     "aws key id": re.compile(rb"AKIA[0-9A-Z]{16}"),
@@ -173,15 +177,17 @@ PY
 # ------------------------------------------------------------------- readme
 step "README reflects this run"
 README=README.md
+README_BAD=0
 if [ ! -f "$README" ]; then
-  bad "no README.md"
+  bad "no README.md"; README_BAD=1
 else
-  grep -q '^## Status' "$README" || bad "README has no Status section"
-  grep -qF "$SUCCESS_LINE" "$README" || bad "README Status does not contain the success line"
+  grep -q '^## Status' "$README" || { bad "README has no Status section"; README_BAD=1; }
+  grep -qF "$SUCCESS_LINE" "$README" \
+    || { bad "README Status does not contain the success line"; README_BAD=1; }
   grep -qF "Ran $UNIT_COUNT tests" "$README" \
-    || bad "README quotes a different test count than the $UNIT_COUNT that just ran"
-  grep -q 'TODO' "$README" && bad "README still contains TODO"
-  [ "$FAILED" -eq 0 ] && ok "Status section present, success line and test count match"
+    || { bad "README quotes a different test count than the $UNIT_COUNT that just ran"; README_BAD=1; }
+  if grep -q 'TODO' "$README"; then bad "README still contains TODO"; README_BAD=1; fi
+  [ "$README_BAD" -eq 0 ] && ok "Status section present, success line and test count match"
 fi
 
 # ------------------------------------------------------------------ sabotage

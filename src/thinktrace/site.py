@@ -224,10 +224,10 @@ accuracy column can never be an empty output in disguise.</li>
 <li>Cost is reported two ways. Generated tokens are contention free. Decode seconds come from the
 server's own <code>eval_duration</code>, which excludes model load, because the card is shared with
 other work and raw wall clock on a shared card measures the neighbours.</li>
-<li>Two exchange rates follow from that. Points per thousand extra tokens is the one to trust,
-since tokens do not move when a neighbour starts a job. Points per extra second is the number the
-task asked for, and it is reported next to it with the caveat that the seconds were measured on a
-contended card.</li>
+<li>Two exchange rates follow from that. Points per 1k extra tokens is the one to trust, since
+tokens do not move when a neighbour starts a job. Points per extra second is the number the task
+asked for, and it sits next to it with the caveat that the seconds were measured on a contended
+card.</li>
 </ul>
 
 <footer>
