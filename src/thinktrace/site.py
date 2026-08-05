@@ -117,6 +117,8 @@ def build(summary: dict) -> str:
                 f"<td>{signed(p['mean'])}<br><span class='ci'>"
                 f"[{signed(p['lo'])}, {signed(p['hi'])}]</span></td>"
                 f"<td>{verdict_html(c)}</td>"
+                f"<td>{c['off']['usable']} / {c['on']['usable']}"
+                f"<br><span class='ci'>of {c['off']['n']}</span></td>"
                 f"<td>{c['off']['gen_tokens_mean']:.0f}</td>"
                 f"<td>{c['on']['gen_tokens_mean']:.0f}</td>"
                 f"<td>{c['token_ratio']:.1f}x</td>"
@@ -145,8 +147,8 @@ def build(summary: dict) -> str:
 <div class="scroll"><table>
 <thead><tr>
   <th>Task type</th><th>Acc, off</th><th>Acc, on</th><th>Paired diff (pts)</th><th>Verdict</th>
-  <th>Tok off</th><th>Tok on</th><th>Token cost</th><th>Pts / 1k extra tok</th>
-  <th>Extra decode</th><th>Pts / extra s</th>
+  <th>Usable off / on</th><th>Tok off</th><th>Tok on</th><th>Token cost</th>
+  <th>Pts / 1k extra tok</th><th>Extra decode</th><th>Pts / extra s</th>
 </tr></thead>
 <tbody>{''.join(body)}</tbody>
 </table></div>

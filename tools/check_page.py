@@ -46,6 +46,9 @@ def main() -> int:
              f"{tag} paired interval")
         want(f"{cell['token_ratio']:.1f}x", f"{tag} token ratio")
         want(cell["verdict"], f"{tag} verdict")
+        # Usable counts have to be on the page, or a zero accuracy cell is
+        # indistinguishable from a cell that produced nothing to grade.
+        want(f"{cell['off']['usable']} / {cell['on']['usable']}", f"{tag} usable counts")
 
     for model, ev in summary["flag_check"].items():
         want(model, "model name")
