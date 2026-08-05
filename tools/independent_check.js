@@ -72,8 +72,10 @@ function extractAnswer(content) {
 }
 
 function normalize(s) {
-  let out = (s || '').normalize('NFKD').replace(/[̀-ͯ]/g, '');
-  out = out.toLowerCase().replace(/’/g, "'");
+  // Escapes rather than literal combining marks: the raw bytes are invisible in
+  // review and one stray edit would silently change what this strips.
+  let out = (s || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
+  out = out.toLowerCase().replace(/\u2019/g, "'");
   out = out.replace(/[^a-z0-9' ]+/g, ' ').replace(/\s+/g, ' ').trim();
   if (out.startsWith('the ')) out = out.slice(4);
   return out;
