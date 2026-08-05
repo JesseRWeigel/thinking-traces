@@ -49,14 +49,17 @@ sys.path.insert(0, "src")
 from thinktrace.items import build_items
 from thinktrace.runner import prompt_sha
 
-want = {i["id"]: prompt_sha(i["prompt"]) for i in build_items()}
+items = build_items()
+want = {i["id"]: prompt_sha(i["prompt"]) for i in items}
 problems, checked = [], 0
+seen = {}
 for path in sorted(pathlib.Path("data/raw").glob("*.jsonl")):
     for n, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
         if not line.strip():
             continue
         rec = json.loads(line)
         checked += 1
+        seen.setdefault((rec["model"], bool(rec["think_requested"])), set()).add(rec["item_id"])
         if rec["item_id"] not in want:
             problems.append(f"{path.name}:{n} unknown item {rec['item_id']}")
         elif "prompt_sha" not in rec:
@@ -64,7 +67,19 @@ for path in sorted(pathlib.Path("data/raw").glob("*.jsonl")):
         elif rec["prompt_sha"] != want[rec["item_id"]]:
             problems.append(f"{path.name}:{n} {rec['item_id']} was collected against a "
                             "different prompt, delete the line and re-run it")
+# A partial run must not pass. Every model needs both conditions, and every
+# condition needs a response for every item, or the paired comparison is being
+# taken over a subset that nobody chose.
+models = sorted({m for m, _ in seen})
+if len(models) < 2:
+    problems.append(f"only {len(models)} model(s) measured, the task calls for at least two")
+for model in models:
+    for think in (False, True):
+        got = seen.get((model, think), set())
+        if len(got) != len(want):
+            problems.append(f"{model} think={think}: {len(got)} responses for {len(want)} items")
 print(f"    checked {checked} responses against the current item set")
+print(f"    models: {', '.join(models)}, both conditions, {len(want)} items each")
 for p in problems[:8]:
     print(f"    FAIL {p}")
 sys.exit(1 if problems else 0)
