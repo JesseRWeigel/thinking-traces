@@ -150,6 +150,28 @@ if bad:
     sys.exit(1)
 PY
 
+# ------------------------------------------------------------- noise floor
+step "self-disagreement floor has been measured"
+python3 - <<'PY' || bad "noise floor not measured, so no effect size can be interpreted"
+import json, pathlib, sys
+s = json.loads(pathlib.Path("results/summary.json").read_text())
+floor = s["noise_floor"]
+if not floor.get("measured"):
+    print(f"    COULD NOT CHECK: {floor.get('reason')}")
+    print("    Temperature 0 is not determinism on this backend, so without a replicate")
+    print("    run there is no floor to compare an effect against. Fix with:")
+    print("      python3 -m thinktrace.runner --model <m> --think both --tag rep2 --per-type 8")
+    sys.exit(1)
+for key, cell in sorted(floor["by_condition"].items()):
+    print(f"    {key}: {cell['grade_flips']}/{cell['n']} grades flipped on an unchanged "
+          f"re-run ({cell['grade_flip_rate']*100:.1f}%, "
+          f"95% CI {cell['rate_lo']*100:.1f} to {cell['rate_hi']*100:.1f})")
+print(f"    floor taken as the widest upper bound: {floor['floor_upper_bound']*100:.1f} points")
+if any(c["clears_noise_floor"] is None for c in s["cells"]):
+    print("    FAIL: some cells carry no floor comparison")
+    sys.exit(1)
+PY
+
 # ------------------------------------------------------- independent checker
 step "independent recomputation (node, shares no code with the analysis)"
 node tools/independent_check.js >"$TMP/indep.log" 2>&1

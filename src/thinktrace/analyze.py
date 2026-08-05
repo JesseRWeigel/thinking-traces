@@ -10,12 +10,13 @@ import json
 import os
 from pathlib import Path
 
-from .grade import grade_response
+from .grade import grade_response, normalize_text
 from .items import TASK_TYPES, build_items
 from .stats import paired_diff, ratio_ci, wilson
 
 ROOT = Path(__file__).resolve().parents[2]
 RAW_DIR = ROOT / "data" / "raw"
+REPLICATE_DIR = ROOT / "data" / "replicate"
 # Overridable so verify can regenerate into a scratch path and diff, rather than
 # writing over the committed result and then comparing it against itself.
 OUT = Path(os.environ.get("THINKTRACE_SUMMARY") or (ROOT / "results" / "summary.json"))
@@ -28,6 +29,66 @@ def load_raw() -> list[dict]:
             if line.strip():
                 records.append(json.loads(line))
     return records
+
+
+def load_replicates() -> list[dict]:
+    if not REPLICATE_DIR.exists():
+        return []
+    records = []
+    for path in sorted(REPLICATE_DIR.glob("*.jsonl")):
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                records.append(json.loads(line))
+    return records
+
+
+def noise_floor(items: dict, graded: list[dict], replicates: list[dict]) -> dict:
+    """How often an unchanged condition disagrees with itself.
+
+    Temperature 0 is not determinism on this backend. Without this number, a small
+    thinking-on versus thinking-off difference cannot be told apart from the
+    backend disagreeing with itself, and the headline would be noise wearing a
+    result's clothes. A subset of items is re-run under the identical condition and
+    the rate at which the grade flips is the floor any real effect has to clear.
+    """
+    if not replicates:
+        return {"measured": False, "reason": "no replicate run present under data/replicate"}
+    first = {(g["model"], g["cond"], g["item_id"]): g for g in graded}
+    out: dict = {"measured": True, "by_condition": {}}
+    for rec in replicates:
+        item = items[rec["item_id"]]
+        g = grade_response(item, rec.get("content", ""), rec.get("done_reason", ""))
+        cond = "on" if rec["think_requested"] else "off"
+        key = (rec["model"], cond)
+        original = first.get((rec["model"], cond, rec["item_id"]))
+        if original is None:
+            continue
+        cell = out["by_condition"].setdefault(
+            f"{rec['model']}|{cond}",
+            {"model": rec["model"], "cond": cond, "n": 0,
+             "grade_flips": 0, "answer_differs": 0, "usable_flips": 0},
+        )
+        cell["n"] += 1
+        if bool(g["correct"]) != bool(original["correct"]):
+            cell["grade_flips"] += 1
+        if bool(g["usable"]) != bool(original["usable"]):
+            cell["usable_flips"] += 1
+        if normalize_text(g["pred"]) != normalize_text(original["pred"]):
+            cell["answer_differs"] += 1
+    worst = 0.0
+    for cell in out["by_condition"].values():
+        lo, hi = wilson(cell["grade_flips"], cell["n"])
+        cell["grade_flip_rate"] = cell["grade_flips"] / cell["n"] if cell["n"] else 0.0
+        cell["rate_lo"], cell["rate_hi"] = lo, hi
+        cell["answer_differ_rate"] = (
+            cell["answer_differs"] / cell["n"] if cell["n"] else 0.0
+        )
+        worst = max(worst, hi)
+    # The floor a paired effect has to clear, taken as the widest upper bound over
+    # all conditions measured. Deliberately conservative: using the point estimate
+    # would let an effect the size of the noise pass as real.
+    out["floor_upper_bound"] = worst
+    return out
 
 
 def thinking_evidence(records: list[dict]) -> dict:
@@ -95,6 +156,8 @@ def analyze() -> dict:
 
     models = sorted({g["model"] for g in graded})
     evidence = thinking_evidence(records)
+    floor = noise_floor(items, graded, load_replicates())
+    floor_bound = floor.get("floor_upper_bound")
 
     cells: list[dict] = []
     # A cell with data for only one condition cannot be compared. Dropping it
@@ -202,6 +265,13 @@ def analyze() -> dict:
                 # saying "thinking hurt" without saying that would be misleading.
                 "budget_limited": (on_trunc / by_cond["on"]["n"] >= 0.10
                                    and on_trunc > off_trunc),
+                # Does the effect exceed the rate at which an unchanged condition
+                # disagrees with itself? None when no replicate run exists, which
+                # is a different statement from False and is kept distinct.
+                "clears_noise_floor": (
+                    None if floor_bound is None
+                    else abs(pd["mean"]) > floor_bound
+                ),
                 "token_ratio": tokens["ratio"],
                 "tokens": tokens,
                 "wall": wall,
@@ -232,6 +302,7 @@ def analyze() -> dict:
             "interval": "95 percent, Wilson for single accuracies, paired normal for differences",
         },
         "flag_check": evidence,
+        "noise_floor": floor,
         "incomplete_cells": incomplete,
         "cells": cells,
         "totals": {

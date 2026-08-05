@@ -55,6 +55,14 @@ def main() -> int:
         if cell["budget_limited"]:
             want("budget limited", f"{tag} budget limited marker")
 
+    floor = summary["noise_floor"]
+    if floor.get("measured"):
+        want(f"{floor['floor_upper_bound'] * 100:.1f} points", "noise floor upper bound")
+        for _, cell in sorted(floor["by_condition"].items()):
+            want(f"{cell['grade_flips']} / {cell['n']}", "noise floor flip count")
+    else:
+        want("Not measured", "noise floor not-measured notice")
+
     for model, ev in summary["flag_check"].items():
         want(model, "model name")
         want(f"{ev['on']['with_trace']} / {ev['on']['n']}", f"{model} trace evidence")

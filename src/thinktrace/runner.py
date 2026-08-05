@@ -48,10 +48,33 @@ def prompt_sha(prompt: str) -> str:
     return hashlib.sha256(prompt.encode("utf-8")).hexdigest()[:16]
 
 
-def raw_path(model: str, think: bool) -> Path:
+def raw_path(model: str, think: bool, tag: str | None = None) -> Path:
     safe = model.replace(":", "-").replace("/", "-")
     cond = "think-on" if think else "think-off"
+    if tag:
+        return ROOT / "data" / "replicate" / f"{safe}__{cond}__{tag}.jsonl"
     return ROOT / "data" / "raw" / f"{safe}__{cond}.jsonl"
+
+
+def stratified_sample(items: list[dict], per_type: int) -> list[dict]:
+    """Evenly spaced sample of `per_type` items from each task type.
+
+    Evenly spaced rather than the first N, because the first N of a type share a
+    template and would understate the variety the replicate measurement is meant
+    to cover. Deterministic, so the replicate set is reproducible.
+    """
+    out: list[dict] = []
+    by_type: dict[str, list[dict]] = {}
+    for it in items:
+        by_type.setdefault(it["type"], []).append(it)
+    for ttype in sorted(by_type):
+        group = by_type[ttype]
+        k = min(per_type, len(group))
+        if k == 0:
+            continue
+        step = len(group) / k
+        out.extend(group[int(i * step)] for i in range(k))
+    return out
 
 
 def chat(model: str, prompt: str, think: bool, timeout: int = 600) -> dict:
@@ -79,11 +102,14 @@ def chat(model: str, prompt: str, think: bool, timeout: int = 600) -> dict:
     return body
 
 
-def run(model: str, think: bool, limit: int | None = None, resume: bool = True) -> Path:
+def run(model: str, think: bool, limit: int | None = None, resume: bool = True,
+        tag: str | None = None, per_type: int | None = None) -> Path:
     items = build_items()
+    if per_type:
+        items = stratified_sample(items, per_type)
     if limit:
         items = items[:limit]
-    out = raw_path(model, think)
+    out = raw_path(model, think, tag)
     out.parent.mkdir(parents=True, exist_ok=True)
     done: set[str] = set()
     if resume and out.exists():
@@ -128,10 +154,15 @@ def main() -> None:
     ap.add_argument("--think", choices=["on", "off", "both"], default="both")
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--no-resume", action="store_true")
+    ap.add_argument("--tag", default=None,
+                    help="write to data/replicate/ under this suffix instead of data/raw/")
+    ap.add_argument("--per-type", type=int, default=None,
+                    help="sample this many items from each task type")
     args = ap.parse_args()
     conds = {"on": [True], "off": [False], "both": [False, True]}[args.think]
     for think in conds:
-        path = run(args.model, think, args.limit, resume=not args.no_resume)
+        path = run(args.model, think, args.limit, resume=not args.no_resume,
+                   tag=args.tag, per_type=args.per_type)
         print(f"wrote {path}")
 
 

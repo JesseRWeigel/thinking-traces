@@ -205,6 +205,45 @@ def build(summary: dict) -> str:
 </div>
 """
 
+    floor = summary["noise_floor"]
+    if floor.get("measured"):
+        floor_rows = "".join(
+            "<tr>"
+            f"<td>{html.escape(c['model'])}, thinking {c['cond']}</td>"
+            f"<td>{c['grade_flips']} / {c['n']}</td>"
+            f"<td>{c['grade_flip_rate'] * 100:.1f}%<br><span class='ci'>"
+            f"[{c['rate_lo'] * 100:.1f}%, {c['rate_hi'] * 100:.1f}%]</span></td>"
+            f"<td>{c['answer_differs']} / {c['n']}</td>"
+            f"<td>{c['usable_flips']} / {c['n']}</td>"
+            "</tr>"
+            for _, c in sorted(floor["by_condition"].items())
+        )
+        cleared = [c for c in summary["cells"] if c["clears_noise_floor"]]
+        floor_section = f"""
+<h2>The floor a real effect has to clear</h2>
+<p>Temperature 0 is not determinism on this backend. A subset of items was re-run under the
+identical condition, and the rate at which the grade flips between two runs that differ in nothing
+is the noise any claimed effect has to beat. The floor is taken as the widest 95 percent upper
+bound across the four model and condition pairs, which is
+<strong>{floor['floor_upper_bound'] * 100:.1f} points</strong>. Using the point estimate instead
+would let an effect the size of the noise pass as real.</p>
+<div class="scroll"><table>
+<thead><tr><th>Model and condition</th><th>Grade flipped</th><th>Flip rate</th>
+<th>Answer text differed</th><th>Usable flipped</th></tr></thead>
+<tbody>{floor_rows}</tbody>
+</table></div>
+<p>{len(cleared)} of {len(summary['cells'])} cells show a paired difference larger than that
+floor{': ' + name_list(cleared) if cleared else ''}.</p>
+"""
+    else:
+        floor_section = f"""
+<h2>The floor a real effect has to clear</h2>
+<p><strong>Not measured.</strong> {html.escape(str(floor.get('reason', '')))}
+Until a replicate run exists, no effect on this page can be separated from the backend
+disagreeing with itself, and the verification suite fails for that reason rather than passing
+with the check skipped.</p>
+"""
+
     flag_rows = []
     for model, ev in summary["flag_check"].items():
         flag_rows.append(
@@ -256,7 +295,7 @@ rows.</p>
 </div>
 {headline}
 {''.join(rows)}
-
+{floor_section}
 <h2>Did the flag actually take effect</h2>
 <p>A <code>think</code> flag that is silently ignored produces two identical conditions and a
 null result that means nothing. The flag is therefore checked against the response rather than

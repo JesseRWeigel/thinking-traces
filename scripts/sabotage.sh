@@ -179,7 +179,13 @@ run_sabotage budget-limited-suppressed src/thinktrace/analyze.py \
                                    and on_trunc > off_trunc),||>>                "budget_limited": False,' \
   summary node tools/independent_check.js
 
-# 11. Publication: the page built with the numbers blanked out.
+# 11. The self-disagreement floor read from the point estimate instead of the
+#     interval's upper bound, which would let an effect the size of the noise pass.
+run_sabotage noise-floor-uses-point-estimate src/thinktrace/analyze.py \
+'        worst = max(worst, hi)||>>        worst = max(worst, cell["grade_flip_rate"])' \
+  summary node tools/independent_check.js
+
+# 12. Publication: the page built with the numbers blanked out.
 run_sabotage page-numbers-blanked src/thinktrace/site.py \
 'def pct(x: float) -> str:
     return f"{x * 100:.1f}%"||>>def pct(x: float) -> str:

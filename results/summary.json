@@ -50,6 +50,10 @@
       "flag_effective": true
     }
   },
+  "noise_floor": {
+    "measured": false,
+    "reason": "no replicate run present under data/replicate"
+  },
   "incomplete_cells": [],
   "cells": [
     {
@@ -112,6 +116,7 @@
       },
       "verdict": "hurts",
       "budget_limited": true,
+      "clears_noise_floor": null,
       "token_ratio": 7.964828443085158,
       "tokens": {
         "a_mean": 2083.4,
@@ -212,6 +217,7 @@
       },
       "verdict": "hurts",
       "budget_limited": true,
+      "clears_noise_floor": null,
       "token_ratio": 3.2842386986158156,
       "tokens": {
         "a_mean": 3926.8,
@@ -312,6 +318,7 @@
       },
       "verdict": "indistinguishable",
       "budget_limited": false,
+      "clears_noise_floor": null,
       "token_ratio": 8.808365343576611,
       "tokens": {
         "a_mean": 515.95,
@@ -412,6 +419,7 @@
       },
       "verdict": "indistinguishable",
       "budget_limited": true,
+      "clears_noise_floor": null,
       "token_ratio": 161.80205655526993,
       "tokens": {
         "a_mean": 1573.525,
@@ -512,6 +520,7 @@
       },
       "verdict": "hurts",
       "budget_limited": true,
+      "clears_noise_floor": null,
       "token_ratio": 12.716296296296298,
       "tokens": {
         "a_mean": 1287.525,
@@ -612,6 +621,7 @@
       },
       "verdict": "indistinguishable",
       "budget_limited": false,
+      "clears_noise_floor": null,
       "token_ratio": 7.152071563088512,
       "tokens": {
         "a_mean": 1139.325,
@@ -712,6 +722,7 @@
       },
       "verdict": "indistinguishable",
       "budget_limited": true,
+      "clears_noise_floor": null,
       "token_ratio": 3.875552767759135,
       "tokens": {
         "a_mean": 3089.3,
@@ -812,6 +823,7 @@
       },
       "verdict": "indistinguishable",
       "budget_limited": false,
+      "clears_noise_floor": null,
       "token_ratio": 16.141630901287552,
       "tokens": {
         "a_mean": 282.075,
@@ -912,6 +924,7 @@
       },
       "verdict": "indistinguishable",
       "budget_limited": true,
+      "clears_noise_floor": null,
       "token_ratio": 6.559903275445153,
       "tokens": {
         "a_mean": 746.025,
@@ -1012,6 +1025,7 @@
       },
       "verdict": "indistinguishable",
       "budget_limited": false,
+      "clears_noise_floor": null,
       "token_ratio": 17.553035844915875,
       "tokens": {
         "a_mean": 599.875,

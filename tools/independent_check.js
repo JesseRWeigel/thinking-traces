@@ -253,8 +253,8 @@ function pairedDiff(diffs) {
 
 // ---------------------------------------------------------------------- main
 
-function loadRaw() {
-  const dir = path.join(ROOT, 'data', 'raw');
+function loadJsonl(dir) {
+  if (!fs.existsSync(dir)) return [];
   const out = [];
   for (const f of fs.readdirSync(dir).filter((x) => x.endsWith('.jsonl')).sort()) {
     const text = fs.readFileSync(path.join(dir, f), 'utf8');
@@ -271,11 +271,12 @@ function main() {
       .map((it) => [it.id, it]),
   );
   const summary = JSON.parse(fs.readFileSync(path.join(ROOT, 'results', 'summary.json'), 'utf8'));
-  const raw = loadRaw();
+  const raw = loadJsonl(path.join(ROOT, 'data', 'raw'));
   if (raw.length === 0) {
     console.error('no cached responses under data/raw');
     process.exit(2);
   }
+  const replicates = loadJsonl(path.join(ROOT, 'data', 'replicate'));
 
   const graded = raw.map((r) => {
     const item = items.get(r.item_id);
@@ -311,6 +312,49 @@ function main() {
     eq(`${model} flag_effective`, onFrac >= 0.9 && offFrac <= 0.02, cell.flag_effective);
     if (!(onFrac >= 0.9 && offFrac <= 0.02)) {
       fail(`${model}: the think flag did not take effect (on ${onFrac}, off ${offFrac})`);
+    }
+  }
+
+  // The self-disagreement floor, recomputed from the replicate responses. This is
+  // the number that decides whether an effect is real or is the backend
+  // disagreeing with itself, so it gets its own derivation rather than a nod.
+  const floor = summary.noise_floor || {};
+  if (replicates.length === 0) {
+    eq('noise_floor measured', false, Boolean(floor.measured));
+    fail('no replicate run under data/replicate, so no effect size can be interpreted');
+  } else {
+    eq('noise_floor measured', true, Boolean(floor.measured));
+    const firstRun = new Map(graded.map((g) => [`${g.model}|${g.cond}|${g.id}`, g]));
+    const mine = new Map();
+    for (const r of replicates) {
+      const item = items.get(r.item_id);
+      if (!item) throw new Error(`replicate references unknown item ${r.item_id}`);
+      const cond = r.think_requested ? 'on' : 'off';
+      const original = firstRun.get(`${r.model}|${cond}|${r.item_id}`);
+      if (!original) continue;
+      const g = gradeOne(item, r.content);
+      const key = `${r.model}|${cond}`;
+      const cell = mine.get(key) || { n: 0, flips: 0 };
+      cell.n += 1;
+      if (Boolean(g.correct) !== Boolean(original.correct)) cell.flips += 1;
+      mine.set(key, cell);
+    }
+    let worst = 0;
+    for (const [key, cell] of [...mine.entries()].sort()) {
+      const pub = (floor.by_condition || {})[key];
+      if (!pub) { fail(`noise floor missing published cell ${key}`); continue; }
+      eq(`floor ${key} n`, cell.n, pub.n);
+      eq(`floor ${key} grade_flips`, cell.flips, pub.grade_flips);
+      closeRel(`floor ${key} rate`, cell.flips / cell.n, pub.grade_flip_rate, 1.0);
+      const [lo, hi] = wilson(cell.flips, cell.n);
+      closeRel(`floor ${key} rate_lo`, lo, pub.rate_lo, 1.0);
+      closeRel(`floor ${key} rate_hi`, hi, pub.rate_hi, 1.0);
+      worst = Math.max(worst, hi);
+    }
+    closeRel('floor upper bound', worst, floor.floor_upper_bound, 1.0);
+    for (const cell of summary.cells) {
+      eq(`${cell.model}/${cell.type} clears_noise_floor`,
+        Math.abs(cell.paired.mean) > worst, cell.clears_noise_floor);
     }
   }
 
